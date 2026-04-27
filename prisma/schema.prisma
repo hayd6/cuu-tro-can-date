@@ -1,0 +1,274 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+// ============================================================
+// USER — Người dùng (Buyer & Merchant)
+// ============================================================
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String?
+  name          String?
+  phone         String?   @unique
+  avatarUrl     String?
+  role          UserRole  @default(BUYER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  resetOtp      String?
+  resetOtpExpiry DateTime?
+
+  // Relations
+  store         Store?             // Merchant sẽ có 1 cửa hàng
+  orders        Order[]            // Buyer sẽ có nhiều đơn hàng
+  reviews       Review[]
+  notifications Notification[]
+  linkedPayments LinkedPayment[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  BUYER
+  MERCHANT
+  ADMIN
+}
+
+// ============================================================
+// STORE — Cửa hàng (thuộc về 1 Merchant)
+// ============================================================
+model Store {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  address     String
+  lat         Float
+  lng         Float
+  imageUrl    String?
+  rating      Float     @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  ownerId     String    @unique
+  owner       User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  products    Product[]
+  orders      Order[]
+  withdrawals Withdrawal[]
+  reviews     Review[]
+
+  @@map("stores")
+}
+
+// ============================================================
+// PRODUCT — Sản phẩm cận date (thuộc về 1 Store)
+// ============================================================
+model Product {
+  id              String          @id @default(cuid())
+  name            String
+  description     String?
+  imageUrl        String?
+  category        ProductCategory @default(OTHER)
+  originalPrice   Int             // Giá gốc (VND)
+  discountPrice   Int             // Giá cứu trợ (VND)
+  discountPercent Int             // % giảm giá
+  quantityTotal   Int             @default(1) // Tổng số lượng
+  quantityLeft    Int             // Số lượng còn lại
+  expiryTime      DateTime        // Thời điểm hết hạn
+  pickupStart     DateTime?       // Giờ bắt đầu lấy hàng
+  pickupEnd       DateTime?       // Giờ kết thúc lấy hàng
+  status          ProductStatus   @default(AVAILABLE)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  // Relations
+  storeId         String
+  store           Store           @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  orderItems      OrderItem[]
+
+  @@map("products")
+}
+
+enum ProductCategory {
+  BAKED_GOODS     // Bánh mì, bánh ngọt
+  HOT_FOOD        // Cơm hộp, đồ ăn nóng
+  FRUIT_VEG       // Trái cây, rau củ
+  VEGETARIAN      // Chay
+  DRINKS          // Đồ uống
+  OTHER
+}
+
+enum ProductStatus {
+  AVAILABLE   // Còn hàng
+  SOLD_OUT    // Hết hàng
+  EXPIRED     // Đã hết hạn
+  HIDDEN      // Đã ẩn bởi merchant
+}
+
+// ============================================================
+// ORDER — Đơn hàng
+// ============================================================
+model Order {
+  id              String        @id @default(cuid())
+  orderCode       String        @unique @default(cuid()) // Mã đơn để hiển thị
+  totalAmount     Int           // Tổng tiền (VND)
+  status          OrderStatus   @default(PENDING)
+  paymentMethod   PaymentMethod @default(MOMO)
+  paymentStatus   PaymentStatus @default(UNPAID)
+  momoTransId     String?       // Transaction ID từ MoMo
+  momoPayUrl      String?       // Pay URL của MoMo
+  pickupCode      String?       // Mã QR / code để lấy hàng
+  note            String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // Relations
+  buyerId         String
+  buyer           User          @relation(fields: [buyerId], references: [id])
+  storeId         String
+  store           Store         @relation(fields: [storeId], references: [id])
+  items           OrderItem[]
+  reviews         Review[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id          String    @id @default(cuid())
+  quantity    Int       @default(1)
+  unitPrice   Int       // Giá tại thời điểm mua
+
+  // Relations
+  orderId     String
+  order       Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+enum OrderStatus {
+  PENDING     // Đang chờ thanh toán
+  CONFIRMED   // Đã thanh toán, chờ lấy hàng
+  PICKED_UP   // Đã lấy hàng
+  CANCELLED   // Đã hủy
+}
+
+enum PaymentMethod {
+  MOMO
+  ZALOPAY
+  CARD
+  COD
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  REFUNDED
+}
+
+// ============================================================
+// REVIEW — Đánh giá cửa hàng
+// ============================================================
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int      // 1-5
+  comment   String?
+  reply     String?
+  createdAt DateTime @default(now())
+
+  // Relations
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  orderId   String?
+  order     Order?   @relation(fields: [orderId], references: [id])
+
+  @@map("reviews")
+}
+
+// ============================================================
+// WITHDRAWAL — Yêu cầu rút tiền của Merchant
+// ============================================================
+model Withdrawal {
+  id          String           @id @default(cuid())
+  amount      Int
+  status      WithdrawalStatus @default(PENDING)
+  bankInfo    String?          // e.g. "Vietcombank - **** 1234"
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relations
+  storeId     String
+  store       Store            @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@map("withdrawals")
+}
+
+enum WithdrawalStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+// ============================================================
+// NOTIFICATION — Thông báo hệ thống cho người dùng
+// ============================================================
+model Notification {
+  id        String           @id @default(cuid())
+  title     String
+  message   String
+  type      NotificationType @default(SYSTEM)
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  // Bối cảnh tùy chọn để định tuyến
+  orderId   String?
+  storeId   String?
+
+  // Lên kết
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+enum NotificationType {
+  ORDER
+  SYSTEM
+  EMERGENCY
+  PROMOTION
+  REVIEW
+}
+
+// ============================================================
+// LINKED PAYMENT — Ví & Ngân hàng liên kết
+// ============================================================
+model LinkedPayment {
+  id          String      @id @default(cuid())
+  type        PaymentType // WALLET, BANK
+  provider    String      // MOMO, ZALOPAY, VCB, TCB...
+  accountName String?     // e.g. "NGUYEN VAN A"
+  accountNumber String    // e.g. "09****123"
+  isDefault   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider, accountNumber])
+  @@map("linked_payments")
+}
+
+enum PaymentType {
+  WALLET
+  BANK
+}
