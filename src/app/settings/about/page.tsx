@@ -128,7 +128,7 @@ export default function AboutPage() {
           </Link>
 
           <a
-            href="https://vercel.com" /* TODO: Thay thế link deploy Vercel của bạn tại đây */
+            href="https://cuu-tro-can-date.vercel.app" 
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-flex items-center gap-2 px-8 py-4 text-white font-semibold rounded-xl overflow-hidden group"
