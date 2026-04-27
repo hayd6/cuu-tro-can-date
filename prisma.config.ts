@@ -12,7 +12,5 @@ export default defineConfig({
   datasource: {
     // Pooled connection for runtime queries (via PgBouncer)
     url: process.env["DATABASE_URL"],
-    // Direct connection required for Prisma Migrate
-    directUrl: process.env["DIRECT_URL"],
   },
 });
