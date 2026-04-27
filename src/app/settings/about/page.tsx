@@ -157,10 +157,21 @@ export default function AboutPage() {
           Giới thiệu ứng dụng
         </h2>
 
-        <p className="text-gray-600 leading-relaxed text-lg">
-          Cứu Trợ Cận Date là nền tảng kết nối người mua với các cửa hàng đang có thực phẩm cận hạn hoặc cần bán nhanh trong ngày. Ứng dụng giúp cửa hàng giảm thất thoát, đồng thời giúp người dùng mua thực phẩm với giá tốt hơn so với giá gốc. 
-        
-        </p>
+        <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
+          <p>
+            Cứu Trợ Cận Date là nền tảng ứng dụng kết nối người mua với các cửa hàng đang có thực phẩm cận hạn hoặc cần bán nhanh trong ngày, nhằm giải quyết bài toán lãng phí thực phẩm đang tồn tại trong xã hội.
+          </p>
+          
+          <div className="space-y-2">
+            <p className="font-semibold text-gray-800">Ứng dụng hoạt động dựa trên nguyên tắc Tiết kiệm và Nhanh chóng:</p>
+            <p><span className="font-semibold text-gray-700">Với cửa hàng:</span> Hỗ trợ quán ăn, tiệm bánh, siêu thị mini và cửa hàng thực phẩm giải phóng hàng tồn cuối ngày một cách nhanh chóng, giảm thiểu thất thoát chi phí.</p>
+            <p><span className="font-semibold text-gray-700">Với người mua:</span> Người dùng có thể tìm kiếm sản phẩm chất lượng, còn sử dụng tốt với mức giá giảm sâu so với giá gốc, đặc biệt phù hợp cho sinh viên và người có thu nhập trung bình.</p>
+          </div>
+
+          <p>
+            Ứng dụng ưu tiên phát hiện sản phẩm gần vị trí người dùng theo bản đồ, đảm bảo quy trình đặt hàng đơn giản, minh bạch thông tin, và xác nhận nhận hàng thuận tiện bằng QR hoặc mã PIN. Mục tiêu tổng quát là xây dựng cầu nối cung và cầu đối với thực phẩm cận date, góp phần thúc đẩy lối sống xanh và tiêu dùng bền vững.
+          </p>
+        </div>
       </motion.div>
 
       {/* FOOTER */}
