@@ -105,9 +105,15 @@ export default function CheckoutClient({
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-6 lg:py-10 animate-in fade-in duration-300">
+<<<<<<< HEAD
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column: Details */}
           <div className="lg:col-span-8 space-y-6">
+=======
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          {/* Left Column: Details */}
+          <div className="md:col-span-8 space-y-6">
+>>>>>>> feature/tablet
             {/* Store Information Card */}
             <section className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
               <div className="flex items-start gap-4">
@@ -226,7 +232,11 @@ export default function CheckoutClient({
           </div>
 
           {/* Right Column: Order Summary (Desktop Sticky) */}
+<<<<<<< HEAD
           <div className="lg:col-span-4">
+=======
+          <div className="md:col-span-4">
+>>>>>>> feature/tablet
             <div className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/10 shadow-md sticky top-24 space-y-6">
               <h3 className="text-sm font-bold text-on-surface uppercase tracking-wider border-b border-outline-variant/10 pb-3">
                 Tổng kết đơn hàng
@@ -248,7 +258,11 @@ export default function CheckoutClient({
                   </span>
                 </div>
               </div>
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> feature/tablet
               <button
                 onClick={handleCheckout}
                 disabled={isProcessing}
@@ -260,7 +274,11 @@ export default function CheckoutClient({
           </div>
         </div>
       </main>
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> feature/tablet
       {/* Mobile Bottom Action Bar (lg:hidden) */}
       <footer className="fixed bottom-0 left-0 w-full z-40 bg-white/95 backdrop-blur-xl border-t border-outline-variant/10 shadow-[0_-8px_24px_-4px_rgba(20,27,43,0.06)] rounded-t-3xl px-6 pt-5 pb-8 lg:hidden">
         <div className="max-w-2xl mx-auto flex items-center justify-between gap-6">

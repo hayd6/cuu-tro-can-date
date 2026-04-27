@@ -52,6 +52,10 @@ export default function Layout({ children }: LayoutProps) {
     "/merchant/verify-success",
     "/merchant/products",
     "/merchant/listings",
+<<<<<<< HEAD
+=======
+    "/merchant/profile/edit",
+>>>>>>> feature/tablet
     "/profile/edit",
     "/profile/change-password",
     "/support/faq",
@@ -86,7 +90,11 @@ export default function Layout({ children }: LayoutProps) {
     <div className="flex flex-col h-[100dvh] w-full overflow-hidden bg-surface text-on-surface antialiased">
       {/* Desktop Header */}
       {!isAuthRoute && (
+<<<<<<< HEAD
         <header className="hidden lg:flex sticky top-0 left-0 right-0 h-[var(--header-height)] z-50 bg-white/90 backdrop-blur-md border-b border-outline-variant/10 items-center justify-between px-5 xl:px-8 flex-shrink-0">
+=======
+        <header className="hidden lg:flex sticky top-0 left-0 right-0 h-[var(--header-height)] z-50 bg-white/90 backdrop-blur-md border-b border-outline-variant/10 items-center justify-between px-4 md:px-5 xl:px-8 flex-shrink-0">
+>>>>>>> feature/tablet
           {/* Left: Hamburger, Logo, App Name */}
           <div className="flex items-center gap-4">
             <button 
@@ -103,7 +111,11 @@ export default function Layout({ children }: LayoutProps) {
           </div>
 
           {/* Center: Search Bar */}
+<<<<<<< HEAD
           <div className="flex-1 flex max-w-5xl mx-6 xl:mx-10">
+=======
+          <div className="flex-1 flex max-w-5xl mx-4 md:mx-6 xl:mx-10">
+>>>>>>> feature/tablet
             <div className="flex flex-1 items-center bg-surface-container-low border border-outline-variant/10 rounded-2xl p-1.5 gap-2 h-14">
               {computedRole === "BUYER" && pathname === "/" && (
                 <div 
@@ -111,7 +123,11 @@ export default function Layout({ children }: LayoutProps) {
                   className="flex-1 flex items-center px-4 gap-3 border-r border-outline-variant/20 h-full cursor-pointer hover:bg-surface-container-low transition-colors"
                 >
                   <span className="material-symbols-outlined text-primary">location_on</span>
+<<<<<<< HEAD
                   <span suppressHydrationWarning className="text-sm font-medium text-on-surface truncate max-w-[400px]">{currentAddress}</span>
+=======
+                  <span suppressHydrationWarning className="text-sm font-medium text-on-surface truncate max-w-[200px] lg:max-w-[400px]">{currentAddress}</span>
+>>>>>>> feature/tablet
                 </div>
               )}
               <div className={`${computedRole === "BUYER" && pathname === "/" ? "flex-[1.5]" : "flex-1"} flex items-center px-4 gap-3 h-full relative`}>
@@ -161,7 +177,11 @@ export default function Layout({ children }: LayoutProps) {
             style={{ 
               width: isSidebarExpanded ? "var(--sidebar-width-expanded)" : "var(--sidebar-width-collapsed)" 
             }}
+<<<<<<< HEAD
             className="hidden lg:flex flex-col bg-surface-container-lowest border-r border-outline-variant/20 py-6 px-3 xl:px-4 gap-2 transition-all duration-300 ease-in-out flex-shrink-0 overflow-y-auto"
+=======
+            className="hidden lg:flex flex-col bg-surface-container-lowest border-r border-outline-variant/20 py-6 px-3 gap-2 transition-all duration-300 ease-in-out flex-shrink-0 overflow-y-auto"
+>>>>>>> feature/tablet
           >
             <nav className="flex flex-col gap-2 flex-1">
               {tabs.map((tab) => {

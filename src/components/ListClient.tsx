@@ -124,7 +124,10 @@ export default function ListClient({ initialProducts }: ListClientProps) {
 
   return (
     <div className="relative w-full min-h-[100dvh] bg-surface pb-32">
+<<<<<<< HEAD
       {/* Top Bar (Sticky) */}
+=======
+>>>>>>> feature/tablet
       {/* Top Bar (Sticky) - Hidden on Desktop */}
       <header className="sticky top-0 left-0 w-full z-50 p-4 space-y-3 pb-4 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm lg:hidden">
         <div className="max-w-md mx-auto w-full space-y-2">
@@ -182,10 +185,17 @@ export default function ListClient({ initialProducts }: ListClientProps) {
       </header>
 
       {/* Product List */}
+<<<<<<< HEAD
       <main className="max-w-7xl mx-auto p-4 lg:p-8 space-y-6">
         <div className="flex items-center justify-between px-1 mb-2">
           <div>
             <h2 className="font-extrabold text-on-surface text-lg lg:text-2xl">Gợi ý cho bạn</h2>
+=======
+      <main className="max-w-7xl mx-auto p-4 md:p-6 lg:p-8 space-y-6">
+        <div className="flex items-center justify-between px-1 mb-2">
+          <div>
+            <h2 className="font-extrabold text-on-surface text-lg md:text-xl lg:text-2xl">Gợi ý cho bạn</h2>
+>>>>>>> feature/tablet
             <p className="text-xs text-on-surface-variant mt-1 hidden lg:block">Các phần ăn đang chờ bạn giải cứu</p>
           </div>
           <div className="flex items-center gap-3">
@@ -299,7 +309,11 @@ export default function ListClient({ initialProducts }: ListClientProps) {
       {/* Floating Map Toggle Button */}
       <Link
         href="/"
+<<<<<<< HEAD
         className="fixed bottom-[110px] left-1/2 -translate-x-1/2 z-40 bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-full font-bold text-sm shadow-xl flex items-center gap-2 active:scale-95 transition-transform border border-white/10"
+=======
+        className="fixed bottom-[110px] lg:bottom-6 left-1/2 -translate-x-1/2 z-40 bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-full font-bold text-sm shadow-xl flex items-center gap-2 active:scale-95 transition-transform border border-white/10"
+>>>>>>> feature/tablet
       >
         <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>map</span>
         Bản đồ
