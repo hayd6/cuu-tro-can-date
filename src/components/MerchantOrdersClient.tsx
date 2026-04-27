@@ -185,7 +185,7 @@ export default function MerchantOrdersClient({ orders }: { orders: Order[] }) {
 
       {/* Tabs */}
       <nav className="sticky top-16 lg:top-0 z-40 border-b border-outline-variant/10 bg-surface-container-low lg:bg-white lg:border-b-0 lg:border-t-0">
-        <div className="desktop-page-shell-tight flex items-center justify-between lg:justify-start lg:gap-10 w-full px-4 lg:px-6">
+        <div className="desktop-page-shell-tight flex items-center justify-between md:grid md:grid-cols-3 lg:flex lg:justify-start lg:gap-10 w-full px-4 lg:px-6">
           {(
             [
               { key: "pending", label: "Chờ lấy", count: pendingOrders.length },
@@ -196,7 +196,7 @@ export default function MerchantOrdersClient({ orders }: { orders: Order[] }) {
             <button
               key={key}
               onClick={() => setActiveTab(key)}
-              className={`relative py-4 flex items-center gap-2 transition-colors ${
+              className={`relative py-4 flex items-center md:justify-center md:w-full gap-2 transition-colors ${
                 activeTab === key
                   ? "text-primary font-bold border-b-2 border-primary"
                   : "text-on-surface-variant font-medium border-b-2 border-transparent hover:text-primary"
@@ -213,7 +213,7 @@ export default function MerchantOrdersClient({ orders }: { orders: Order[] }) {
         </div>
       </nav>
 
-      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 py-6 lg:py-8 space-y-6">
+      <main className="desktop-page-shell-tight px-4 md:px-6 lg:px-6 xl:px-8 py-6 md:py-8 lg:py-8 space-y-6">
         {activeTab === "pending" && renderOrderList(pendingOrders)}
         {activeTab === "completed" && renderOrderList(completedOrders)}
         {activeTab === "cancelled" && renderOrderList(cancelledOrders)}

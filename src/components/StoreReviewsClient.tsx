@@ -63,7 +63,7 @@ export default function StoreReviewsClient({ initialReviews, stats, isOwner }: S
         </div>
       </header>
 
-      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 py-6 lg:py-8">
+      <main className="desktop-page-shell-tight px-4 md:px-6 lg:px-6 xl:px-8 py-6 md:py-8 lg:py-8">
         {/* Rating Overview */}
         <section className="bg-surface-container-low rounded-2xl p-6 mb-6 shadow-sm border border-outline-variant/10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">

@@ -4,8 +4,10 @@ import { useAppContext } from "@/context/AppProvider";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import logo from "@/assets/images/logo-cuu-tro-can-date.png";
+import defaultAvatar from "@/assets/images/avatar-mac-dinh.jpg";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -52,6 +54,7 @@ export default function Layout({ children }: LayoutProps) {
     "/merchant/verify-success",
     "/merchant/products",
     "/merchant/listings",
+    "/merchant/profile/edit",
     "/profile/edit",
     "/profile/change-password",
     "/support/faq",
@@ -66,27 +69,54 @@ export default function Layout({ children }: LayoutProps) {
   const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/register") || pathname.startsWith("/forgot-password");
 
   const currentSearch = searchParams.get("search") || "";
+  const [localSearch, setLocalSearch] = useState(currentSearch);
+  const searchTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const isComposingRef = useRef(false);
 
-  const handleSearch = (val: string) => {
+  const flushSearch = useCallback((val: string) => {
     const params = new URLSearchParams(window.location.search);
     if (val) {
       params.set("search", val);
     } else {
       params.delete("search");
     }
-    router.push(`${pathname}?${params.toString()}`);
-  };
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [pathname, router]);
+
+  const handleSearch = useCallback((val: string) => {
+    setLocalSearch(val);
+    // Don't trigger URL update while composing (Vietnamese IME)
+    if (isComposingRef.current) return;
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+    searchTimerRef.current = setTimeout(() => {
+      flushSearch(val);
+    }, 600);
+  }, [flushSearch]);
+
+  const handleCompositionStart = useCallback(() => {
+    isComposingRef.current = true;
+  }, []);
+
+  const handleCompositionEnd = useCallback((e: React.CompositionEvent<HTMLInputElement>) => {
+    isComposingRef.current = false;
+    const val = e.currentTarget.value;
+    setLocalSearch(val);
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+    searchTimerRef.current = setTimeout(() => {
+      flushSearch(val);
+    }, 600);
+  }, [flushSearch]);
 
   const isHomepage = pathname === "/" || pathname === "/merchant";
   
   // Safe default avatar
-  const userAvatar = session?.user?.image || (session?.user as any)?.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100";
+  const userAvatar = session?.user?.image || (session?.user as any)?.avatarUrl || defaultAvatar.src;
 
   return (
     <div className="flex flex-col h-[100dvh] w-full overflow-hidden bg-surface text-on-surface antialiased">
       {/* Desktop Header */}
       {!isAuthRoute && (
-        <header className="hidden lg:flex sticky top-0 left-0 right-0 h-[var(--header-height)] z-50 bg-white/90 backdrop-blur-md border-b border-outline-variant/10 items-center justify-between px-5 xl:px-8 flex-shrink-0">
+        <header className="hidden lg:flex sticky top-0 left-0 right-0 h-[var(--header-height)] z-50 bg-white/90 backdrop-blur-md border-b border-outline-variant/10 items-center justify-between px-4 md:px-5 xl:px-8 flex-shrink-0">
           {/* Left: Hamburger, Logo, App Name */}
           <div className="flex items-center gap-4">
             <button 
@@ -103,7 +133,7 @@ export default function Layout({ children }: LayoutProps) {
           </div>
 
           {/* Center: Search Bar */}
-          <div className="flex-1 flex max-w-5xl mx-6 xl:mx-10">
+          <div className="flex-1 flex max-w-5xl mx-4 md:mx-6 xl:mx-10">
             <div className="flex flex-1 items-center bg-surface-container-low border border-outline-variant/10 rounded-2xl p-1.5 gap-2 h-14">
               {computedRole === "BUYER" && pathname === "/" && (
                 <div 
@@ -111,7 +141,7 @@ export default function Layout({ children }: LayoutProps) {
                   className="flex-1 flex items-center px-4 gap-3 border-r border-outline-variant/20 h-full cursor-pointer hover:bg-surface-container-low transition-colors"
                 >
                   <span className="material-symbols-outlined text-primary">location_on</span>
-                  <span suppressHydrationWarning className="text-sm font-medium text-on-surface truncate max-w-[400px]">{currentAddress}</span>
+                  <span suppressHydrationWarning className="text-sm font-medium text-on-surface truncate max-w-[200px] lg:max-w-[400px]">{currentAddress}</span>
                 </div>
               )}
               <div className={`${computedRole === "BUYER" && pathname === "/" ? "flex-[1.5]" : "flex-1"} flex items-center px-4 gap-3 h-full relative`}>
@@ -120,8 +150,10 @@ export default function Layout({ children }: LayoutProps) {
                   type="text" 
                   placeholder="Tìm món ăn hoặc cửa hàng..." 
                   className="bg-transparent border-none focus:ring-0 text-sm w-full text-on-surface pr-10"
-                  value={currentSearch}
+                  value={localSearch}
                   onChange={(e) => handleSearch(e.target.value)}
+                  onCompositionStart={handleCompositionStart}
+                  onCompositionEnd={handleCompositionEnd}
                 />
                 {pathname === "/" && (
                   <button 
@@ -161,7 +193,7 @@ export default function Layout({ children }: LayoutProps) {
             style={{ 
               width: isSidebarExpanded ? "var(--sidebar-width-expanded)" : "var(--sidebar-width-collapsed)" 
             }}
-            className="hidden lg:flex flex-col bg-surface-container-lowest border-r border-outline-variant/20 py-6 px-3 xl:px-4 gap-2 transition-all duration-300 ease-in-out flex-shrink-0 overflow-y-auto"
+            className="hidden lg:flex flex-col bg-surface-container-lowest border-r border-outline-variant/20 py-6 px-3 gap-2 transition-all duration-300 ease-in-out flex-shrink-0 overflow-y-auto"
           >
             <nav className="flex flex-col gap-2 flex-1">
               {tabs.map((tab) => {

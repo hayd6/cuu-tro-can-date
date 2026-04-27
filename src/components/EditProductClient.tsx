@@ -167,10 +167,10 @@ export default function EditProductClient({ product, storeId }: { product: any, 
         </div>
 
         <form className="space-y-8" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-8 items-start">
             
-            {/* Left Column: Image Upload (lg:col-span-4) */}
-            <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
+            {/* Left Column: Image Upload (md:col-span-4 lg:col-span-4) */}
+            <div className="md:col-span-4 lg:col-span-4 md:sticky md:top-24 lg:sticky lg:top-24 space-y-4">
               <label className="block text-[11px] font-bold tracking-[0.1em] uppercase text-outline mb-1">
                 Hình ảnh sản phẩm
               </label>
@@ -207,8 +207,8 @@ export default function EditProductClient({ product, storeId }: { product: any, 
               <p className="text-[10px] text-on-surface-variant/60 text-center">Nên chọn ảnh vuông, dung lượng tối đa 5MB</p>
             </div>
 
-            {/* Right Column: Form Fields (lg:col-span-8) */}
-            <div className="lg:col-span-8 space-y-6">
+            {/* Right Column: Form Fields (md:col-span-8 lg:col-span-8) */}
+            <div className="md:col-span-8 lg:col-span-8 space-y-6">
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Name */}

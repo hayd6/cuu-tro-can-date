@@ -111,9 +111,9 @@ export default function ProductDetailClient({ product, reviews }: { product: Pro
       </header>
 
       <main className="pb-32 lg:pb-12 lg:pt-8 px-0 lg:px-8 max-w-7xl mx-auto">
-        <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+        <div className="md:grid md:grid-cols-12 md:gap-8">
           {/* Left Column: Image, Description, Reviews */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="md:col-span-7 space-y-6">
             {/* Visual Area */}
             <section className="relative aspect-[16/9] w-full overflow-hidden bg-surface-container-highest lg:rounded-3xl lg:shadow-md">
               <img
@@ -130,8 +130,8 @@ export default function ProductDetailClient({ product, reviews }: { product: Pro
               </div>
             </section>
 
-            {/* Description & Details (Desktop) */}
-            <div className="hidden lg:block bg-surface-container-lowest rounded-3xl p-6 shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/10">
+            {/* Description & Details (Desktop & Tablet) */}
+            <div className="hidden md:block bg-surface-container-lowest rounded-3xl p-6 shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/10">
               <section>
                 <h4 className="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-3">Mô tả sản phẩm</h4>
                 <p className="text-on-surface-variant leading-relaxed text-sm">
@@ -208,7 +208,7 @@ export default function ProductDetailClient({ product, reviews }: { product: Pro
           </div>
 
           {/* Right Column: Store Info & Purchase Actions */}
-          <div className="lg:col-span-5 px-5 lg:px-0 -mt-6 lg:mt-0 relative z-10 lg:z-0 space-y-6">
+          <div className="md:col-span-5 px-5 md:px-0 -mt-6 md:mt-0 relative z-10 lg:z-0 space-y-6">
             <div className="bg-surface-container-lowest rounded-3xl p-6 shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/10">
               {/* Title & Price */}
               <div className="flex justify-between items-start gap-4">
@@ -280,8 +280,8 @@ export default function ProductDetailClient({ product, reviews }: { product: Pro
               </div>
             </div>
 
-            {/* Purchase Action for Desktop */}
-            <div className="hidden lg:block bg-surface-container-lowest rounded-3xl p-6 shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/10">
+            {/* Purchase Action for Desktop & Tablet */}
+            <div className="hidden md:block bg-surface-container-lowest rounded-3xl p-6 shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/10">
               <h4 className="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">Mua hàng</h4>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-sm text-on-surface-variant font-medium">Số lượng:</span>
@@ -316,7 +316,7 @@ export default function ProductDetailClient({ product, reviews }: { product: Pro
             </div>
 
             {/* Description & Details (Mobile) */}
-            <div className="lg:hidden space-y-6 mt-6 bg-surface-container-lowest rounded-3xl p-6 shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/10">
+            <div className="md:hidden space-y-6 mt-6 bg-surface-container-lowest rounded-3xl p-6 shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/10">
               <section>
                 <h4 className="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-3">Mô tả sản phẩm</h4>
                 <p className="text-on-surface-variant leading-relaxed text-sm">
@@ -395,7 +395,7 @@ export default function ProductDetailClient({ product, reviews }: { product: Pro
       </main>
 
       {/* Bottom Action Bar */}
-      <nav className="fixed bottom-0 left-0 w-full z-50 bg-white shadow-[0_-8px_24px_-4px_rgba(20,27,43,0.06)] px-5 py-3 pb-6 flex items-center gap-3 lg:hidden">
+      <nav className="fixed bottom-0 left-0 w-full z-50 bg-white shadow-[0_-8px_24px_-4px_rgba(20,27,43,0.06)] px-5 py-3 pb-6 flex items-center gap-3 md:hidden">
 
         {/* Quantity Selector */}
         <div className="flex items-center bg-slate-100 rounded-2xl p-1 gap-1">
