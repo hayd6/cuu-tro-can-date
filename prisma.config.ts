@@ -10,12 +10,6 @@ export default defineConfig({
     seed: "npx tsx prisma/seed.ts",
   },
   datasource: {
-    // Pooled connection for runtime queries (via PgBouncer)
     url: process.env["DATABASE_URL"],
-<<<<<<< HEAD
-=======
-    // Direct connection required for Prisma Migrate
-    directUrl: process.env["DIRECT_URL"],
->>>>>>> de6ae46f9d4b0617971cff8a32dce976fd74eca5
   },
 });
