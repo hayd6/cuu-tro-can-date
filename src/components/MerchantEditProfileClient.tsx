@@ -127,12 +127,16 @@ export default function MerchantEditProfileClient({ store }: MerchantEditProfile
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-6 py-8 space-y-10 animate-in fade-in duration-300 slide-in-from-bottom-4">
-        
-        {error && <p className="text-error text-sm font-semibold p-3 bg-error-container/20 rounded-lg">{error}</p>}
-        {success && <p className="text-primary text-sm font-semibold p-3 bg-primary-container/20 rounded-lg">{success}</p>}
+      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 py-8 animate-in fade-in duration-300 slide-in-from-bottom-4">
+        <div className="max-w-5xl mx-auto">
+          {error && <p className="text-error text-sm font-semibold p-3 bg-error-container/20 rounded-lg mb-6">{error}</p>}
+          {success && <p className="text-primary text-sm font-semibold p-3 bg-primary-container/20 rounded-lg mb-6">{success}</p>}
 
-        <section className="flex flex-col items-center gap-6">
+          <div className="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-12">
+            
+            {/* LEFT COLUMN: Logo */}
+            <div className="w-full lg:w-1/3 flex-shrink-0 flex flex-col items-center lg:pt-4">
+              <section className="flex flex-col items-center gap-6 w-full">
           <div className="relative group cursor-pointer" onClick={() => document.getElementById('store-logo-input')?.click()}>
             <div className="w-32 h-32 rounded-full overflow-hidden bg-surface-container-highest flex items-center justify-center ring-4 ring-surface-container-low shadow-sm">
               <img 
@@ -159,8 +163,11 @@ export default function MerchantEditProfileClient({ store }: MerchantEditProfile
             </p>
           </div>
         </section>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        {/* RIGHT COLUMN: Form Fields */}
+        <div className="w-full lg:w-2/3 space-y-8 lg:bg-surface-container-lowest lg:p-8 lg:rounded-[32px] lg:shadow-sm lg:border lg:border-outline-variant/10">
+          <form onSubmit={handleSubmit} className="space-y-8">
           <div className="space-y-2">
             <label className="block text-xs font-bold uppercase tracking-wider text-on-surface-variant ml-1">Tên cửa hàng</label>
             <div className="relative group">
@@ -253,26 +260,29 @@ export default function MerchantEditProfileClient({ store }: MerchantEditProfile
              <p className="text-[10px] text-on-surface-variant pt-1 pl-1">Email đăng nhập không thể thay đổi</p>
           </div>
           
-          <button type="submit" className="hidden">Submit hidden</button>
-        </form>
+            <button type="submit" className="hidden">Submit hidden</button>
+          </form>
 
-        <div className="space-y-4 pt-6">
-          <div className="bg-surface-container-low p-2 rounded-2xl border border-outline-variant/10 shadow-sm">
-            <Link href="/profile/change-password" className="flex items-center justify-between bg-surface-container-lowest p-4 rounded-xl cursor-pointer hover:bg-surface-container-high transition-colors">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                  <span className="material-symbols-outlined">lock</span>
+          <div className="space-y-4 pt-2">
+            <div className="bg-surface-container-low lg:bg-surface p-2 rounded-2xl border border-outline-variant/10 shadow-sm">
+              <Link href="/profile/change-password" className="flex items-center justify-between bg-surface-container-lowest p-4 rounded-xl cursor-pointer hover:bg-surface-container-high transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <span className="material-symbols-outlined">lock</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-on-surface">Thay đổi mật khẩu</p>
+                    <p className="text-xs text-on-surface-variant">Cập nhật mật khẩu bảo mật của bạn</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-on-surface">Thay đổi mật khẩu</p>
-                  <p className="text-xs text-on-surface-variant">Cập nhật mật khẩu bảo mật của bạn</p>
-                </div>
-              </div>
-              <span className="material-symbols-outlined text-on-surface-variant/40">chevron_right</span>
-            </Link>
+                <span className="material-symbols-outlined text-on-surface-variant/40">chevron_right</span>
+              </Link>
+            </div>
           </div>
         </div>
-      </main>
+      </div>
+    </div>
+  </main>
 
       <LocationPickerModal 
         isOpen={isMapOpen}

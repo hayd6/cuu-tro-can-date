@@ -9,7 +9,7 @@ export default function ComingSoonPage() {
     <div className="bg-surface text-on-surface antialiased min-h-[100dvh] font-body flex flex-col">
       {/* Top Navigation Anchor */}
       <header className="w-full z-50 bg-white/80 backdrop-blur-md h-16 flex items-center px-4 shrink-0">
-        <div className="flex items-center w-full max-w-lg mx-auto">
+        <div className="desktop-page-shell-tight flex items-center w-full px-4 lg:px-6">
           <button 
             onClick={() => router.back()}
             className="p-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-200 rounded-full flex items-center justify-center"
@@ -19,7 +19,7 @@ export default function ComingSoonPage() {
         </div>
       </header>
       
-      <main className="flex-1 flex flex-col items-center justify-center p-6 max-w-lg mx-auto w-full animate-in zoom-in-95 duration-500 pb-20">
+      <main className="desktop-page-shell-tight flex-1 flex flex-col items-center justify-center p-6 lg:p-10 w-full animate-in zoom-in-95 duration-500 pb-20">
         
         {/* Animated Icon Container */}
         <div className="relative mb-10 w-32 h-32 flex items-center justify-center">

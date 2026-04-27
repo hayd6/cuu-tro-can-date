@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --header-height: 88px;
+  --sidebar-width-expanded: 232px;
+  --sidebar-width-collapsed: 88px;
+  --page-gutter: 1rem;
+  --page-max-width: 1600px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-gutter: 1.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --sidebar-width-expanded: 260px;
+    --page-gutter: 2rem;
+    --page-max-width: 1760px;
+  }
+}
+
+
 /* Leaflet overrides — must have correct z-index in Next.js */
 .leaflet-container {
   width: 100%;
@@ -33,6 +56,20 @@
   body {
     font-family: 'Inter', sans-serif;
     @apply bg-surface text-on-surface overflow-hidden h-[100dvh] w-full;
+  }
+}
+
+@layer components {
+  .desktop-page-shell {
+    @apply w-full max-w-[var(--page-max-width)] mx-auto px-4;
+  }
+
+  .desktop-page-shell-tight {
+    @apply w-full max-w-6xl mx-auto px-4;
+  }
+
+  .desktop-page-card {
+    @apply rounded-[24px] border border-outline-variant/10 bg-surface-container-lowest shadow-sm;
   }
 }
 

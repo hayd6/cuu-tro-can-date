@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Html5Qrcode } from "html5-qrcode";
-import { confirmPickup, confirmPickupByPin } from "@/lib/actions/orders";
+import { confirmPickup } from "@/lib/actions/orders";
 
 interface Props {
   storeId: string;
@@ -15,8 +16,6 @@ export default function MerchantScanClient({ storeId }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [showPinModal, setShowPinModal] = useState(false);
-  const [pin, setPin] = useState("");
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const isHandlingSuccess = useRef(false);
   const lastScannedCode = useRef<string | null>(null);
@@ -87,28 +86,7 @@ export default function MerchantScanClient({ storeId }: Props) {
     }
   };
 
-  const handlePinSubmit = async () => {
-    if (pin.length < 4) return;
-    
-    setProcessing(true);
-    try {
-      const res = await confirmPickupByPin(pin, storeId);
-      if (res.success) {
-        setSuccess(true);
-        setTimeout(() => {
-          router.push("/merchant/orders");
-        }, 1500);
-      } else {
-        alert(res.error || "Mã PIN không đúng.");
-      }
-    } catch (err: any) {
-      alert("Lỗi hệ thống khi xác nhận PIN.");
-    } finally {
-      setProcessing(false);
-      setShowPinModal(false);
-      setPin("");
-    }
-  };
+
 
   useEffect(() => {
     startScanner();
@@ -152,7 +130,7 @@ export default function MerchantScanClient({ storeId }: Props) {
         <div className="relative w-full max-w-sm aspect-square bg-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
           <div id="qr-reader" className="w-full h-full" />
           
-          {isReady && !processing && !showPinModal && (
+          {isReady && !processing && (
             <div className="absolute inset-0 pointer-events-none z-10">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] border-2 border-primary rounded-2xl">
                 <div className="absolute top-0 left-0 w-full h-[2px] bg-primary shadow-[0_0_15px_rgba(var(--primary-rgb),0.8)] animate-scan"></div>
@@ -222,56 +200,18 @@ export default function MerchantScanClient({ storeId }: Props) {
 
           <div className="space-y-4">
              <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">Cách 2: Nhập mã PIN</p>
-             <button 
-               onClick={() => setShowPinModal(true)}
+             <Link 
+               href="/merchant/enter-code"
                className="w-full py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-bold text-sm tracking-widest flex items-center justify-center gap-3 hover:bg-white/10 active:scale-[0.98] transition-all"
              >
                <span className="material-symbols-outlined">keyboard</span>
                NHẬP MÃ THỦ CÔNG
-             </button>
+             </Link>
           </div>
         </div>
       </main>
 
-      {/* PIN Modal */}
-      {showPinModal && (
-        <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="bg-slate-900 border border-white/10 w-full max-w-sm rounded-[32px] p-8 space-y-8 animate-in slide-in-from-bottom-10 duration-300">
-            <div className="text-center space-y-2">
-              <h2 className="text-xl font-black tracking-tight">Nhập mã PIN</h2>
-              <p className="text-xs text-white/40 font-medium">Mã PIN gồm 6 chữ số hiển thị trên app khách hàng</p>
-            </div>
 
-            <div className="space-y-6">
-              <input 
-                type="text" 
-                maxLength={7}
-                placeholder="#847-291"
-                className="w-full bg-black/40 border border-white/10 rounded-2xl py-5 text-center text-3xl font-black tracking-[0.2em] outline-none focus:ring-2 focus:ring-primary/50 transition-all text-primary placeholder:text-white/10 uppercase"
-                value={pin}
-                onChange={(e) => setPin(e.target.value)}
-                autoFocus
-              />
-
-              <div className="flex gap-3">
-                <button 
-                  onClick={() => setShowPinModal(false)}
-                  className="flex-1 py-4 rounded-2xl bg-white/5 text-white/60 font-bold text-xs tracking-widest"
-                >
-                  HUỶ
-                </button>
-                <button 
-                  onClick={handlePinSubmit}
-                  disabled={pin.length < 4 || processing}
-                  className="flex-[2] py-4 rounded-2xl bg-primary text-white font-bold text-xs tracking-widest shadow-lg shadow-primary/20 disabled:opacity-50"
-                >
-                  {processing ? "ĐANG XÁC NHẬN..." : "XÁC NHẬN"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       <style jsx global>{`
         @keyframes scan {

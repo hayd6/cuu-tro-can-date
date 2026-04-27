@@ -7,19 +7,26 @@ export default function MerchantVerifySuccessPage() {
   const router = useRouter();
 
   return (
-    <div className="bg-surface text-on-surface font-body selection:bg-primary-container/30 min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-6 h-16 w-full bg-[#f1f3ff] border-b border-surface-container/50">
-        <button 
-          onClick={() => router.push('/merchant')}
-          className="absolute left-6 p-2 -ml-2 rounded-full hover:bg-[#dce2f7]/50 transition-colors active:scale-95 duration-150"
-        >
-          <span className="material-symbols-outlined text-slate-900">close</span>
-        </button>
-        <h1 className="font-['Inter'] font-semibold tracking-tight text-slate-900 mx-auto">Xác nhận đơn hàng</h1>
-      </header>
+    <div className="bg-surface lg:bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container/30 min-h-[100dvh] flex flex-col lg:flex-row lg:items-center lg:justify-center lg:p-8 relative">
+      
+      {/* Desktop Wrapper */}
+      <div className="flex flex-col lg:flex-row w-full lg:max-w-5xl lg:h-[650px] lg:bg-surface lg:rounded-[32px] lg:shadow-2xl lg:overflow-hidden relative z-10 flex-grow lg:flex-grow-0">
+        
+        {/* LEFT PANEL */}
+        <div className="flex flex-col w-full lg:w-3/5 lg:border-r border-outline-variant/15 relative lg:overflow-y-auto no-scrollbar">
+          
+          {/* Header */}
+          <header className="fixed lg:sticky top-0 left-0 right-0 z-50 flex items-center justify-center px-6 h-16 w-full bg-[#f1f3ff] lg:bg-surface/90 lg:backdrop-blur-md border-b border-surface-container/50">
+            <button 
+              onClick={() => router.push('/merchant')}
+              className="absolute left-6 lg:relative lg:left-0 lg:mr-auto p-2 -ml-2 rounded-full hover:bg-black/5 lg:hover:bg-surface-container transition-colors active:scale-95 duration-150"
+            >
+              <span className="material-symbols-outlined text-slate-900 lg:text-on-surface">close</span>
+            </button>
+            <h1 className="font-['Inter'] font-semibold tracking-tight text-slate-900 lg:text-on-surface lg:absolute lg:left-1/2 lg:-translate-x-1/2">Xác nhận đơn hàng</h1>
+          </header>
 
-      <main className="flex-grow pt-24 pb-48 px-6 flex flex-col items-center max-w-lg mx-auto w-full animate-in fade-in duration-500">
+          <main className="desktop-page-shell-tight flex-grow pt-24 lg:pt-8 pb-48 lg:pb-12 px-4 lg:px-8 xl:px-12 flex flex-col items-center w-full animate-in fade-in duration-500">
         {/* Success Icon & Title */}
         <div className="mt-8 mb-8 flex flex-col items-center text-center">
           <div className="relative mb-8">
@@ -88,35 +95,41 @@ export default function MerchantVerifySuccessPage() {
             </div>
           </div>
         </section>
-      </main>
+        </main>
+      </div>
 
-      {/* Footer Actions */}
-      <footer className="fixed bottom-0 left-0 right-0 p-6 bg-surface/80 backdrop-blur-xl z-40 max-w-lg mx-auto space-y-3">
-        <div className="grid grid-cols-2 gap-3">
-          <Link 
-            href="/merchant/scan"
-            className="h-14 bg-surface-container-high text-primary font-bold rounded-2xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 border border-outline-variant/10 hover:bg-surface-container-highest"
-          >
-            <span className="material-symbols-outlined text-xl">qr_code_scanner</span>
-            <span>Quét tiếp</span>
-          </Link>
-          <Link 
-            href="/merchant/enter-code"
-            className="h-14 bg-surface-container-high text-primary font-bold rounded-2xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 border border-outline-variant/10 hover:bg-surface-container-highest"
-          >
-            <span className="material-symbols-outlined text-xl">keyboard</span>
-            <span>Nhập mã</span>
-          </Link>
+        {/* RIGHT PANEL - Actions */}
+        <div className="flex-none lg:w-2/5 flex flex-col lg:justify-center lg:items-center bg-transparent lg:bg-surface-container-lowest lg:p-8">
+          <footer className="fixed lg:static bottom-0 left-0 right-0 p-6 lg:p-0 bg-surface/90 lg:bg-transparent backdrop-blur-xl lg:backdrop-blur-none z-40 w-full space-y-3 lg:space-y-4 border-t border-outline-variant/10 lg:border-none shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.1)] lg:shadow-none">
+            <div className="grid grid-cols-2 gap-3 lg:flex lg:flex-col lg:gap-4">
+              <Link 
+                href="/merchant/scan"
+                className="h-14 bg-surface-container-high text-primary font-bold rounded-2xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 border border-outline-variant/10 hover:bg-surface-container-highest"
+              >
+                <span className="material-symbols-outlined text-xl">qr_code_scanner</span>
+                <span>Quét tiếp</span>
+              </Link>
+              <Link 
+                href="/merchant/enter-code"
+                className="h-14 bg-surface-container-high text-primary font-bold rounded-2xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 border border-outline-variant/10 hover:bg-surface-container-highest"
+              >
+                <span className="material-symbols-outlined text-xl">keyboard</span>
+                <span>Nhập mã</span>
+              </Link>
+            </div>
+            
+            <div className="hidden lg:block w-full h-[1px] bg-outline-variant/20 my-2"></div>
+
+            <button 
+              onClick={() => router.push('/merchant')}
+              className="w-full h-14 bg-gradient-to-br from-primary to-primary-container text-white font-bold rounded-2xl active:scale-[0.98] transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+            >
+              <span>Về Trang Chủ</span>
+              <span className="material-symbols-outlined text-xl">home</span>
+            </button>
+          </footer>
         </div>
-        
-        <button 
-          onClick={() => router.push('/merchant')}
-          className="w-full h-14 bg-gradient-to-br from-primary to-primary-container text-white font-bold rounded-2xl active:scale-[0.98] transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
-        >
-          <span>Về Trang Chủ</span>
-          <span className="material-symbols-outlined text-xl">home</span>
-        </button>
-      </footer >
+      </div>
     </div>
   );
 }

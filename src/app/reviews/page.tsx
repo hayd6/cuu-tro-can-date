@@ -24,7 +24,7 @@ export default function StoreReviewsPage() {
         <div className="bg-[#f1f3ff] h-[1px] w-full"></div>
       </header>
       
-      <main className="max-w-2xl mx-auto px-4 py-6">
+      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 py-6 lg:py-8">
         {/* Rating Overview Section */}
         <section className="bg-surface-container-lowest rounded-xl p-6 mb-6 shadow-sm border border-outline-variant/10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">

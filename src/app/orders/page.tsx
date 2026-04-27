@@ -16,14 +16,7 @@ export default async function BuyerOrdersPage() {
 
   return (
     <div className="bg-surface text-on-surface min-h-[100dvh] pb-32 font-body">
-      {/* TopAppBar */}
-      <header className="w-full sticky top-0 z-50 bg-surface/90 backdrop-blur-md border-b border-surface-container">
-        <div className="flex items-center justify-center px-4 h-16 w-full max-w-screen-xl mx-auto">
-          <h1 className="font-['Inter'] font-semibold tracking-tight text-xl text-primary">
-            Đơn hàng của tôi
-          </h1>
-        </div>
-      </header>
+
 
       {!userId ? (
         // Not logged in - prompt login

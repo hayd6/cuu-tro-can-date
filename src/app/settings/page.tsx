@@ -25,7 +25,7 @@ export default function SettingsPage() {
         <div className="bg-[#f1f3ff] h-[1px] w-full"></div>
       </header>
 
-      <main className="max-w-md mx-auto px-4 py-6 space-y-6">
+      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 py-6 lg:py-8 space-y-6">
         <section className="space-y-2">
           <h2 className="text-sm font-bold text-on-surface-variant uppercase tracking-widest px-1">Giao diện</h2>
           <div className="bg-surface-container-lowest rounded-[16px] overflow-hidden shadow-sm border border-outline-variant/10">

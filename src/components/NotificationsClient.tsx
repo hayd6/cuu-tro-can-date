@@ -102,38 +102,50 @@ export default function NotificationsClient({
   };
 
   return (
-    <div className="bg-surface text-on-surface min-h-[100dvh] pb-32 font-body antialiased">
-      <header className="w-full top-0 sticky bg-surface/90 backdrop-blur-md z-40 border-b border-surface-container">
-        <div className="flex items-center justify-center px-6 py-4 w-full max-w-xl mx-auto">
-          <h1 className="font-['Inter'] font-semibold tracking-tight text-xl text-primary">{title}</h1>
+    <div className="bg-slate-50/50 text-on-surface min-h-[100dvh] pb-32 font-body antialiased">
+      
+      {/* Mobile Sticky Header */}
+      <header className="lg:hidden sticky top-0 z-40 bg-white border-b border-slate-100 shadow-sm">
+        <div className="flex items-center justify-center px-4 py-4 w-full">
+          <h1 className="font-['Inter'] font-semibold tracking-tight text-xl text-primary">Thông báo</h1>
         </div>
       </header>
-      
-      <main className="max-w-xl mx-auto px-4 py-6 space-y-8 animate-in fade-in duration-300">
+
+      <main className="max-w-4xl mx-auto px-4 lg:px-6 xl:px-8 py-6 lg:py-10 space-y-8 lg:space-y-12 animate-in fade-in duration-300">
         
+        {/* Desktop Title Header */}
+        <div className="hidden lg:block mb-10">
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">Thông báo</h2>
+          <p className="text-slate-500 text-sm">Theo dõi các ưu đãi giải cứu và tình trạng đơn hàng của bạn.</p>
+        </div>
+
         {notifications.length === 0 && (
-          <div className="text-center text-on-surface-variant mt-20">Bạn chưa có thông báo nào.</div>
+          <div className="text-center text-slate-400 mt-20 text-sm font-medium">Bạn chưa có thông báo nào.</div>
         )}
 
         {/* Group: Hôm nay */}
         {groups.today.length > 0 && (
-          <section className="space-y-4">
-            <div className="flex items-center justify-between px-2">
-              <h2 className="text-xs font-bold tracking-[0.1em] uppercase text-on-surface-variant">Hôm nay</h2>
-              {groups.today.some(n => !n.isRead) && <span className="w-2 h-2 rounded-full bg-primary-container"></span>}
+          <section>
+            <div className="flex items-center gap-4 mb-6">
+              <span className="text-xs font-bold tracking-widest text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-full">Hôm nay</span>
+              <div className="h-px flex-1 bg-slate-200/60"></div>
             </div>
-            <div className="space-y-3">
+            <div className="grid gap-4">
               {groups.today.map((n) => (
                 <div 
                   key={n.id}
                   onClick={() => handleRead(n.id, n.isRead, n.orderId ? `/orders` : null)}
-                  className={`relative cursor-pointer transition-all duration-300 active:scale-[0.98] border shadow-sm p-4 flex gap-4 rounded-xl ${n.isRead ? 'bg-surface-container-lowest border-outline-variant/10' : 'bg-surface-container-low border-primary/20'}`}
+                  className={`group relative flex items-start gap-5 p-6 bg-white border border-transparent hover:border-emerald-100 rounded-2xl shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] transition-all cursor-pointer`}
                 >
-                  {!n.isRead && <div className="absolute top-1/2 -translate-y-1/2 left-1.5 w-2 h-2 rounded-full bg-primary animate-pulse"></div>}
-                  {renderIcon(n.type)}
-                  <div className="flex-1 space-y-1">
-                    <p className="text-[0.875rem] font-medium text-on-surface leading-snug" dangerouslySetInnerHTML={{ __html: n.message }}></p>
-                    <p className="text-[0.75rem] text-on-surface-variant font-medium">{formatTime(n.createdAt)}</p>
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+                    {renderIcon(n.type)}
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start mb-1">
+                      <h3 className="font-bold text-slate-800 text-base">{n.title || "Thông báo"}</h3>
+                      <span className="text-xs font-medium text-slate-400">{formatTime(n.createdAt)}</span>
+                    </div>
+                    <p className="text-slate-600 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: n.message }}></p>
                   </div>
                 </div>
               ))}
@@ -143,23 +155,27 @@ export default function NotificationsClient({
 
         {/* Group: Hôm qua */}
         {groups.yesterday.length > 0 && (
-          <section className="space-y-4">
-            <div className="flex items-center justify-between px-2">
-              <h2 className="text-xs font-bold tracking-[0.1em] uppercase text-on-surface-variant">Hôm qua</h2>
-              {groups.yesterday.some(n => !n.isRead) && <span className="w-2 h-2 rounded-full bg-primary-container"></span>}
+          <section>
+            <div className="flex items-center gap-4 mb-6">
+              <span className="text-xs font-bold tracking-widest text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-full">Hôm qua</span>
+              <div className="h-px flex-1 bg-slate-200/60"></div>
             </div>
-            <div className="space-y-3">
+            <div className="grid gap-4">
               {groups.yesterday.map((n) => (
                 <div 
                   key={n.id}
                   onClick={() => handleRead(n.id, n.isRead, n.orderId ? orderRedirectPath : null)}
-                  className={`relative cursor-pointer transition-all duration-300 active:scale-[0.98] border shadow-sm p-4 flex gap-4 rounded-xl ${n.isRead ? 'bg-surface-container-lowest border-outline-variant/10' : 'bg-surface-container-low border-primary/20'}`}
+                  className={`group relative flex items-start gap-5 p-6 bg-white border border-transparent hover:border-emerald-100 rounded-2xl shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] transition-all cursor-pointer`}
                 >
-                  {!n.isRead && <div className="absolute top-1/2 -translate-y-1/2 left-1.5 w-2 h-2 rounded-full bg-primary animate-pulse"></div>}
-                  {renderIcon(n.type)}
-                  <div className="flex-1 space-y-1">
-                    <p className="text-[0.875rem] font-medium text-on-surface leading-snug" dangerouslySetInnerHTML={{ __html: n.message }}></p>
-                    <p className="text-[0.75rem] text-on-surface-variant font-medium">{formatTime(n.createdAt)}</p>
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+                    {renderIcon(n.type)}
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start mb-1">
+                      <h3 className="font-bold text-slate-800 text-base">{n.title || "Thông báo"}</h3>
+                      <span className="text-xs font-medium text-slate-400">{formatTime(n.createdAt)}</span>
+                    </div>
+                    <p className="text-slate-600 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: n.message }}></p>
                   </div>
                 </div>
               ))}
@@ -169,22 +185,29 @@ export default function NotificationsClient({
 
         {/* Group: Cũ hơn */}
         {groups.older.length > 0 && (
-          <section className="space-y-4">
-            <h2 className="text-xs font-bold tracking-[0.1em] uppercase text-on-surface-variant px-2">Cũ hơn</h2>
-             <div className="space-y-3">
+          <section>
+            <div className="flex items-center gap-4 mb-6">
+              <span className="text-xs font-bold tracking-widest text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-full">Cũ hơn</span>
+              <div className="h-px flex-1 bg-slate-200/60"></div>
+            </div>
+            <div className="grid gap-4 opacity-80">
               {groups.older.map((n) => (
                 <div 
                   key={n.id}
                   onClick={() => handleRead(n.id, n.isRead, n.orderId ? orderRedirectPath : null)}
-                  className={`relative cursor-pointer transition-all duration-300 active:scale-[0.98] border shadow-sm p-4 flex gap-4 rounded-xl ${n.isRead ? 'bg-surface-container-lowest border-outline-variant/10' : 'bg-surface-container-low border-primary/20'}`}
+                  className={`group relative flex items-start gap-5 p-6 bg-white border border-transparent hover:border-emerald-100 rounded-2xl shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] transition-all cursor-pointer`}
                 >
-                  {!n.isRead && <div className="absolute top-1/2 -translate-y-1/2 left-1.5 w-2 h-2 rounded-full bg-primary animate-pulse"></div>}
-                  {renderIcon(n.type)}
-                  <div className="flex-1 space-y-1">
-                    <p className="text-[0.875rem] font-medium text-on-surface leading-snug" dangerouslySetInnerHTML={{ __html: n.message }}></p>
-                    <p className="text-[0.75rem] text-on-surface-variant font-medium">
-                      {new Date(n.createdAt).toLocaleDateString("vi-VN")} - {formatTime(n.createdAt)}
-                    </p>
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-slate-100 text-slate-400">
+                    {renderIcon(n.type)}
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start mb-1">
+                      <h3 className="font-bold text-slate-800 text-base">{n.title || "Thông báo"}</h3>
+                      <span className="text-xs font-medium text-slate-400">
+                        {new Date(n.createdAt).toLocaleDateString("vi-VN")}
+                      </span>
+                    </div>
+                    <p className="text-slate-600 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: n.message }}></p>
                   </div>
                 </div>
               ))}
@@ -192,6 +215,7 @@ export default function NotificationsClient({
           </section>
         )}
       </main>
+
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function FAQPage() {
     <div className="bg-surface text-on-surface antialiased min-h-[100dvh] font-body">
       {/* Top Navigation Bar */}
       <header className="w-full top-0 sticky z-50 bg-surface/90 backdrop-blur-md border-b border-surface-container">
-        <div className="flex items-center justify-between px-6 py-4 w-full max-w-3xl mx-auto">
+        <div className="desktop-page-shell-tight flex items-center justify-between px-4 lg:px-6 py-4 w-full">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => router.back()}
@@ -22,7 +22,7 @@ export default function FAQPage() {
         </div>
       </header>
       
-      <main className="max-w-3xl mx-auto px-6 pt-8 pb-24 animate-in fade-in duration-300">
+      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 pt-8 pb-24 animate-in fade-in duration-300">
         {/* Search Section */}
         <section className="mb-10">
           <h2 className="text-3xl font-bold tracking-tight mb-6 text-on-surface">Chào bạn, chúng tôi<br/>có thể giúp gì?</h2>

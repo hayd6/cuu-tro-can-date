@@ -47,32 +47,49 @@ export default function BuyerOrdersClient({ orders }: { orders: Order[] }) {
   };
 
   return (
-    <>
-      {/* Tabs Navigation */}
-      <nav className="flex px-4 bg-surface-container-low mb-6 relative border-b border-outline-variant/10">
-        <button
-          onClick={() => setActiveTab("pending")}
-          className={`flex-1 py-4 text-center transition-all ${
-            activeTab === "pending"
-              ? "border-b-2 border-primary text-primary font-bold"
-              : "text-on-surface-variant font-medium border-b-2 border-transparent hover:text-primary"
-          }`}
-        >
-          Đang chờ lấy ({pendingOrders.length})
-        </button>
-        <button
-          onClick={() => setActiveTab("history")}
-          className={`flex-1 py-4 text-center transition-all ${
-            activeTab === "history"
-              ? "border-b-2 border-primary text-primary font-bold"
-              : "text-on-surface-variant font-medium border-b-2 border-transparent hover:text-primary"
-          }`}
-        >
-          Lịch sử
-        </button>
-      </nav>
+    <div className="bg-slate-50/50 min-h-screen font-body antialiased">
+      <div className="sticky top-0 z-40 bg-white border-b border-slate-100 shadow-sm lg:shadow-none lg:border-b-0 lg:bg-transparent">
+        <header className="w-full lg:hidden">
+          <div className="flex items-center justify-center px-4 py-4 w-full">
+            <h1 className="font-['Inter'] font-semibold tracking-tight text-xl text-primary">Đơn hàng của tôi</h1>
+          </div>
+        </header>
 
-      <main className="max-w-md mx-auto px-4 space-y-6">
+        {/* Tabs Navigation */}
+        <nav className="bg-slate-50/60 backdrop-blur-md border-t border-slate-100/50 lg:border-t-0 lg:bg-white lg:backdrop-blur-none lg:border-b lg:border-slate-100/80">
+          <div className="flex w-full lg:max-w-7xl lg:mx-auto lg:px-6 xl:px-8 lg:justify-start lg:gap-10">
+            <button
+              onClick={() => setActiveTab("pending")}
+              className={`flex-1 lg:flex-initial py-4 text-sm relative flex items-center justify-center lg:justify-start gap-2 transition-colors cursor-pointer ${
+                activeTab === "pending" 
+                  ? "text-primary font-bold border-b-2 border-primary" 
+                  : "text-on-surface-variant font-medium border-b-2 border-transparent hover:text-primary"
+              }`}
+            >
+              <span>Đang chờ lấy</span>
+              {pendingOrders.length > 0 && (
+                <span className="flex h-5 px-1.5 min-w-[20px] rounded-full bg-rose-500 text-white text-[10px] font-black items-center justify-center shadow-sm">
+                  {pendingOrders.length}
+                </span>
+              )}
+            </button>
+            
+            <button
+              onClick={() => setActiveTab("history")}
+              className={`flex-1 lg:flex-initial py-4 text-sm relative flex items-center justify-center lg:justify-start transition-colors cursor-pointer ${
+                activeTab === "history" 
+                  ? "text-primary font-bold border-b-2 border-primary" 
+                  : "text-on-surface-variant font-medium border-b-2 border-transparent hover:text-primary"
+              }`}
+            >
+              <span>Lịch sử</span>
+            </button>
+          </div>
+        </nav>
+      </div>
+
+
+      <main className="max-w-7xl mx-auto px-4 lg:px-6 xl:px-8 space-y-6 lg:space-y-8 pb-12">
         {activeTab === "pending" && (
           <>
             {pendingOrders.length === 0 ? (
@@ -81,9 +98,9 @@ export default function BuyerOrdersClient({ orders }: { orders: Order[] }) {
                 <p className="text-on-surface-variant font-medium">Chưa có đơn hàng nào đang chờ</p>
               </div>
             ) : (
-              pendingOrders.map((order) => {
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {pendingOrders.map((order) => {
                 const statusInfo = STATUS_MAP[order.status];
-                const firstItem = order.items[0];
                 return (
                   <article
                     key={order.id}
@@ -172,8 +189,10 @@ export default function BuyerOrdersClient({ orders }: { orders: Order[] }) {
                     </div>
                   </article>
                 );
-              })
+              })}
+              </div>
             )}
+
 
             {/* Eco Stats */}
             <div className="bg-primary/10 p-5 rounded-2xl border border-primary/10 flex items-center space-x-4">
@@ -196,7 +215,8 @@ export default function BuyerOrdersClient({ orders }: { orders: Order[] }) {
                 <p className="text-on-surface-variant font-medium">Chưa có lịch sử đơn hàng</p>
               </div>
             ) : (
-              historyOrders.map((order) => {
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {historyOrders.map((order) => {
                 const statusInfo = STATUS_MAP[order.status];
                 return (
                   <article
@@ -272,11 +292,13 @@ export default function BuyerOrdersClient({ orders }: { orders: Order[] }) {
                     )}
                   </article>
                 );
-              })
+              })}
+              </div>
             )}
           </div>
         )}
       </main>
-    </>
+    </div>
   );
 }
+

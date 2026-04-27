@@ -66,7 +66,7 @@ export async function getStoreByOwner(userId: string) {
 /**
  * Lấy thống kê dashboard của merchant (bao gồm số dư)
  */
-export async function getMerchantStats(storeId: string) {
+export async function getMerchantStats(storeId: string, timeframe: "week" | "month" = "week") {
   const now = new Date();
   
   // Hôm nay
@@ -176,15 +176,15 @@ export async function getMerchantStats(storeId: string) {
     ? Math.round(lifetimeRevenue / lifetimeCompletedOrders) 
     : 0;
 
-  // 7-day chart data
-  const sevenDaysAgo = new Date(todayStart);
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+  const daysCount = timeframe === "month" ? 30 : 7;
+  const startDate = new Date(todayStart);
+  startDate.setDate(startDate.getDate() - (daysCount - 1));
 
-  const last7DaysOrders = await prisma.order.findMany({
+  const historyOrders = await prisma.order.findMany({
     where: {
       storeId,
       status: "PICKED_UP",
-      updatedAt: { gte: sevenDaysAgo }
+      updatedAt: { gte: startDate }
     },
     select: {
       totalAmount: true,
@@ -192,13 +192,15 @@ export async function getMerchantStats(storeId: string) {
     }
   });
 
-  const dailyStats = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(sevenDaysAgo);
+  const dailyStats = Array.from({ length: daysCount }, (_, i) => {
+    const d = new Date(startDate);
     d.setDate(d.getDate() + i);
-    const dayLabel = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"][d.getDay()];
+    const dayLabel = timeframe === "week" 
+      ? ["CN", "T2", "T3", "T4", "T5", "T6", "T7"][d.getDay()]
+      : d.getDate().toString();
     const dateStr = d.toDateString();
     
-    const dayTotal = last7DaysOrders
+    const dayTotal = historyOrders
       .filter(o => new Date(o.updatedAt).toDateString() === dateStr)
       .reduce((sum, o) => sum + o.totalAmount, 0);
       

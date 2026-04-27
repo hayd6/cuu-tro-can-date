@@ -72,7 +72,7 @@ export default function MerchantListingsClient({ store }: { store: Store }) {
 
   return (
     <div className="bg-surface font-body text-on-surface antialiased min-h-[100dvh]">
-      <header className="sticky top-0 w-full z-50 bg-slate-50/80 backdrop-blur-md flex items-center px-4 py-4 border-b border-surface-container gap-4">
+      <header className="sticky top-0 w-full z-50 bg-slate-50/80 backdrop-blur-md flex items-center px-4 py-4 border-b border-surface-container gap-4 lg:hidden">
         <Link href="/merchant" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition-all">
           <span className="material-symbols-outlined">arrow_back</span>
         </Link>
@@ -80,32 +80,42 @@ export default function MerchantListingsClient({ store }: { store: Store }) {
       </header>
 
       {/* Tabs */}
-      <nav className="flex w-full bg-surface px-4 sticky top-16 z-40 border-b border-outline-variant/10">
-        <div className="flex items-center w-full">
+      <nav className="flex w-full bg-surface sticky top-0 lg:top-0 z-40 border-b border-outline-variant/10">
+        <div className="flex w-full lg:max-w-7xl lg:mx-auto px-4 lg:px-6 xl:px-8 lg:justify-start lg:gap-10">
           <button
             onClick={() => setActiveTab("active")}
-            className={`flex-1 py-4 text-center text-sm transition-colors ${
+            className={`flex-1 lg:flex-initial py-4 text-sm relative flex items-center justify-center lg:justify-start gap-2 transition-colors cursor-pointer ${
               activeTab === "active"
                 ? "text-primary font-bold border-b-2 border-primary"
                 : "text-on-surface-variant font-medium border-b-2 border-transparent hover:text-primary"
             }`}
           >
-            Đang bán ({activeProducts.length})
+            <span>Đang bán</span>
+            {activeProducts.length > 0 && (
+              <span className="flex h-5 px-1.5 min-w-[20px] rounded-full bg-rose-500 text-white text-[10px] font-black items-center justify-center shadow-sm">
+                {activeProducts.length}
+              </span>
+            )}
           </button>
           <button
             onClick={() => setActiveTab("ended")}
-            className={`flex-1 py-4 text-center text-sm transition-colors ${
+            className={`flex-1 lg:flex-initial py-4 text-sm relative flex items-center justify-center lg:justify-start gap-2 transition-colors cursor-pointer ${
               activeTab === "ended"
                 ? "text-primary font-bold border-b-2 border-primary"
                 : "text-on-surface-variant font-medium border-b-2 border-transparent hover:text-primary"
             }`}
           >
-            Kết thúc ({endedProducts.length})
+            <span>Kết thúc</span>
+            {endedProducts.length > 0 && (
+              <span className="flex h-5 px-1.5 min-w-[20px] rounded-full bg-rose-500 text-white text-[10px] font-black items-center justify-center shadow-sm">
+                {endedProducts.length}
+              </span>
+            )}
           </button>
         </div>
       </nav>
 
-      <main className="pt-6 px-4 space-y-6 max-w-2xl mx-auto pb-12">
+      <main className="pt-6 px-4 pb-32 max-w-7xl mx-auto">
         {activeTab === "active" ? (
           activeProducts.length === 0 ? (
             <div className="bg-surface-container-low border-2 border-dashed border-outline-variant/30 rounded-xl p-8 flex flex-col items-center justify-center text-center opacity-60">
@@ -113,10 +123,11 @@ export default function MerchantListingsClient({ store }: { store: Store }) {
               <p className="text-sm font-medium text-on-surface-variant">Không có sản phẩm nào đang bán</p>
             </div>
           ) : (
-            activeProducts.map(product => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {activeProducts.map(product => (
               <div
                 key={product.id}
-                className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] mb-4"
+                className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/5 flex flex-col h-full"
               >
                 <div className="relative h-32 w-full">
                   <img
@@ -129,8 +140,8 @@ export default function MerchantListingsClient({ store }: { store: Store }) {
                   </div>
                 </div>
 
-                <div className="p-5 space-y-4">
-                  <div className="flex justify-between items-start">
+                <div className="p-5 flex flex-col flex-1">
+                  <div className="flex justify-between items-start gap-2 mb-4">
                     <div>
                       <h3 className="text-lg font-bold text-on-surface tracking-tight">{product.name}</h3>
                     </div>
@@ -144,7 +155,7 @@ export default function MerchantListingsClient({ store }: { store: Store }) {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-2 mt-auto">
                     <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest">
                       <span className="text-on-surface-variant">
                         Đã bán: {product.quantityTotal - product.quantityLeft}/{product.quantityTotal} túi
@@ -163,20 +174,24 @@ export default function MerchantListingsClient({ store }: { store: Store }) {
                     </div>
                   </div>
 
-                  <div className="flex gap-3 pt-2">
-                    <Link href={`/merchant/products/${product.id}/edit`} className="flex-1 bg-surface-container-high text-on-surface font-bold text-xs py-3 rounded-lg hover:bg-surface-variant transition-colors active:scale-95 text-center flex items-center justify-center">
+                  <div className="mt-4 flex gap-2 pt-2">
+                    <Link
+                      href={`/merchant/products/${product.id}/edit`}
+                      className="flex-1 bg-gradient-to-br from-primary to-primary-container text-white font-bold text-xs py-2.5 rounded-xl text-center shadow-sm active:scale-98 transition-transform flex items-center justify-center"
+                    >
                       Sửa
                     </Link>
                     <button 
                       onClick={() => handleEnd(product.id)}
-                      className="flex-1 bg-tertiary-fixed text-on-tertiary-fixed-variant font-bold text-xs py-3 rounded-lg hover:bg-tertiary-fixed-dim transition-colors active:scale-95"
+                      className="flex-1 bg-surface-container-highest text-primary font-bold text-xs py-2.5 rounded-xl text-center active:scale-98 transition-transform flex items-center justify-center"
                     >
                       Kết thúc
                     </button>
                   </div>
                 </div>
               </div>
-            ))
+            ))}
+            </div>
           )
         ) : (
           endedProducts.length === 0 ? (
@@ -185,10 +200,11 @@ export default function MerchantListingsClient({ store }: { store: Store }) {
               <p className="text-sm font-medium text-on-surface-variant">Không có sản phẩm nào đã kết thúc</p>
             </div>
           ) : (
-            endedProducts.map(product => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {endedProducts.map(product => (
               <div
                 key={product.id}
-                className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] mb-4"
+                className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/5 flex flex-col h-full"
               >
                 <div className="relative h-32 w-full opacity-60 grayscale-[50%]">
                   <img
@@ -202,8 +218,8 @@ export default function MerchantListingsClient({ store }: { store: Store }) {
                   </div>
                 </div>
 
-                <div className="p-5 space-y-4">
-                  <div className="flex justify-between items-start">
+                <div className="p-5 flex flex-col flex-1">
+                  <div className="flex justify-between items-start gap-2 mb-auto">
                     <div>
                       <h3 className="text-lg font-bold text-on-surface tracking-tight opacity-80">{product.name}</h3>
                     </div>
@@ -214,23 +230,24 @@ export default function MerchantListingsClient({ store }: { store: Store }) {
                     </div>
                   </div>
 
-                  <div className="flex gap-3 pt-2">
+                  <div className="mt-4 flex gap-2 pt-2">
                     <Link 
                       href={`/merchant/products/${product.id}/edit`}
-                      className="flex-1 bg-gradient-to-r from-primary to-primary-container text-white font-bold text-xs py-3 rounded-lg hover:opacity-90 transition-opacity active:scale-95 flex items-center justify-center"
+                      className="flex-1 bg-gradient-to-br from-primary to-primary-container text-white font-bold text-xs py-2.5 rounded-xl text-center shadow-sm active:scale-98 transition-transform flex items-center justify-center"
                     >
                       Đăng lại
                     </Link>
                     <button 
                       onClick={() => handleDelete(product.id)}
-                      className="flex-1 bg-error/10 text-error font-bold text-xs py-3 rounded-lg hover:bg-error/20 transition-colors active:scale-95"
+                      className="flex-1 bg-error/10 text-error font-bold text-xs py-2.5 rounded-xl hover:bg-error/20 transition-colors active:scale-95 flex items-center justify-center"
                     >
                       Xóa
                     </button>
                   </div>
                 </div>
               </div>
-            ))
+            ))}
+            </div>
           )
         )}
       </main>

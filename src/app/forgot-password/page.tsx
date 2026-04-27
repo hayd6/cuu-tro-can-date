@@ -126,7 +126,7 @@ export default function ForgotPasswordPage() {
         <div className="absolute bottom-0 left-0 right-0 bg-outline-variant/20 h-[1px]"></div>
       </header>
 
-      <main className="mt-16 flex-1 flex flex-col items-center px-6 pt-10 pb-12 w-full max-w-md mx-auto">
+      <main className="mt-16 flex-1 flex flex-col items-center px-6 pt-10 pb-12 w-full max-w-5xl mx-auto">
         
         {/* Stepper Bar */}
         {step < 4 && (
@@ -196,7 +196,7 @@ export default function ForgotPasswordPage() {
 
         {/* STEP 2: OTP Verification */}
         {step === 2 && (
-          <div className="w-full max-w-md bg-surface-container-lowest shadow-sm border border-outline-variant/10 rounded-xl p-8 transition-all">
+          <div className="w-full max-w-md xl:max-w-lg bg-surface-container-lowest shadow-sm border border-outline-variant/10 rounded-xl p-8 transition-all">
             <div className="text-center mb-10">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-container/10 text-primary mb-6">
                 <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>phonelink_lock</span>
@@ -245,7 +245,7 @@ export default function ForgotPasswordPage() {
 
         {/* STEP 3 & 4: Reset Password (Background context for Step 4 Popup) */}
         {(step === 3 || step === 4) && (
-          <div className={`w-full max-w-md ${step === 4 ? 'opacity-40 pointer-events-none select-none' : ''}`}>
+          <div className={`w-full max-w-md xl:max-w-lg ${step === 4 ? 'opacity-40 pointer-events-none select-none' : ''}`}>
             <div className="text-center mb-10">
               <h2 className="text-2xl font-bold text-on-surface leading-tight tracking-tight mb-2">Đặt lại mật khẩu</h2>
               <p className="text-on-surface-variant text-sm mb-8">Vui lòng tạo mật khẩu mới mạnh hơn để bảo vệ tài khoản của bạn.</p>

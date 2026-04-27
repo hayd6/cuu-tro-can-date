@@ -51,7 +51,7 @@ export default function RegisterPage() {
       <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary-container rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-secondary-container rounded-full blur-[100px] opacity-30 pointer-events-none"></div>
 
-      <main className="w-full max-w-md bg-surface-container-lowest sm:bg-transparent rounded-2xl sm:rounded-none shadow-sm sm:shadow-none p-6 sm:p-0 relative z-10">
+      <main className="w-full max-w-md xl:max-w-lg bg-surface-container-lowest sm:bg-transparent rounded-2xl sm:rounded-none shadow-sm sm:shadow-none p-6 sm:p-0 relative z-10">
         {/* Header */}
         <header className="mb-10">
           <button 

@@ -125,7 +125,8 @@ export default function ListClient({ initialProducts }: ListClientProps) {
   return (
     <div className="relative w-full min-h-[100dvh] bg-surface pb-32">
       {/* Top Bar (Sticky) */}
-      <header className="sticky top-0 left-0 w-full z-50 p-4 space-y-3 pb-4 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm">
+      {/* Top Bar (Sticky) - Hidden on Desktop */}
+      <header className="sticky top-0 left-0 w-full z-50 p-4 space-y-3 pb-4 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm lg:hidden">
         <div className="max-w-md mx-auto w-full space-y-2">
           {/* Address Bar */}
           <button 
@@ -181,10 +182,23 @@ export default function ListClient({ initialProducts }: ListClientProps) {
       </header>
 
       {/* Product List */}
-      <main className="max-w-2xl mx-auto p-4 space-y-4">
+      <main className="max-w-7xl mx-auto p-4 lg:p-8 space-y-6">
         <div className="flex items-center justify-between px-1 mb-2">
-          <h2 className="font-bold text-on-surface text-lg">Gợi ý cho bạn</h2>
-          <span className="text-on-surface-variant text-sm font-medium">{filteredProducts.length} kết quả</span>
+          <div>
+            <h2 className="font-extrabold text-on-surface text-lg lg:text-2xl">Gợi ý cho bạn</h2>
+            <p className="text-xs text-on-surface-variant mt-1 hidden lg:block">Các phần ăn đang chờ bạn giải cứu</p>
+          </div>
+          <div className="flex items-center gap-3">
+            {/* Desktop Filter Button */}
+            <button 
+              onClick={() => setIsFilterOpen(true)}
+              className="hidden lg:flex items-center gap-2 bg-surface-container-low border border-outline-variant/20 px-4 py-2 rounded-xl text-sm font-bold text-primary hover:bg-surface-container-high transition-colors"
+            >
+              <span className="material-symbols-outlined text-sm">tune</span>
+              Bộ lọc
+            </button>
+            <span className="text-on-surface-variant text-sm font-medium">{filteredProducts.length} kết quả</span>
+          </div>
         </div>
 
         {filteredProducts.length === 0 ? (
@@ -193,18 +207,19 @@ export default function ListClient({ initialProducts }: ListClientProps) {
             <p className="text-on-surface-variant font-medium">Không có sản phẩm nào</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((item) => (
               <div
                 key={item.id}
-                className="group bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 overflow-hidden active:scale-[0.98] transition-transform relative"
+                className="group bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 overflow-hidden hover:shadow-md transition-all relative flex flex-col h-full"
               >
                 {/* Primary Card Link (Detail Page) */}
                 <Link href={`/product/${item.id}`} className="absolute inset-0 z-0" aria-label="Xem chi tiết sản phẩm" />
 
-                <div className="p-4 relative z-10 pointer-events-none">
+                <div className="p-4 relative z-10 pointer-events-none flex flex-col flex-1">
                   {/* Image Section */}
-                  <div className="aspect-[21/9] w-full rounded-xl overflow-hidden mb-4 relative bg-surface-container-high transition-transform group-hover:scale-[1.02] duration-300">
+                  <div className="aspect-[21/9] lg:aspect-[16/10] w-full rounded-xl overflow-hidden mb-4 relative bg-surface-container-high flex-shrink-0">
+
                     <img
                       className="w-full h-full object-cover"
                       alt={item.name}
@@ -254,7 +269,8 @@ export default function ListClient({ initialProducts }: ListClientProps) {
                   </div>
 
                   {/* Pricing & CTA */}
-                  <div className="flex items-center justify-between mt-4">
+                  <div className="flex items-center justify-between mt-auto pt-4">
+
                     <div className="flex flex-col">
                       <span className="text-xs text-on-surface-variant/60 line-through font-medium leading-none mb-1">
                         {item.originalPrice.toLocaleString("vi-VN")}đ

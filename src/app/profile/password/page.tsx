@@ -64,7 +64,7 @@ export default function ChangePasswordPage() {
         <h1 className="flex-1 text-center font-bold text-lg pr-10">Đổi mật khẩu</h1>
       </header>
 
-      <main className="px-6 py-10 max-w-md mx-auto space-y-10">
+      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 py-10 space-y-10">
         {/* Icon & Message */}
         <div className="flex flex-col items-center text-center gap-6">
           <div className="w-20 h-20 bg-primary-container/20 rounded-2xl flex items-center justify-center text-primary rotate-[-10deg] shadow-lg shadow-primary/5">

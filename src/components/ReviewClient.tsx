@@ -46,7 +46,7 @@ export default function ReviewClient({ order, userId, initialReview }: ReviewCli
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 flex flex-col min-h-screen">
+    <div className="desktop-page-shell-tight p-6 lg:p-8 flex flex-col min-h-screen">
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
         <button onClick={() => router.back()} className="p-2 -ml-2">

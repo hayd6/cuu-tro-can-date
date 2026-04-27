@@ -53,8 +53,8 @@ export default function WithdrawClient({ balance, storeId, history }: WithdrawCl
   return (
     <div className="bg-surface font-body text-on-surface min-h-[100dvh]">
       {/* Top Navigation */}
-      <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm h-16 flex items-center px-4">
-        <div className="flex items-center w-full max-w-4xl mx-auto">
+      <header className="sticky top-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-surface-container h-16 flex items-center px-4">
+        <div className="desktop-page-shell-tight flex items-center w-full px-4 lg:px-6">
           <button 
             onClick={() => router.back()}
             className="p-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-200 rounded-full flex items-center justify-center"
@@ -65,21 +65,23 @@ export default function WithdrawClient({ balance, storeId, history }: WithdrawCl
         </div>
       </header>
       
-      <main className="pt-24 pb-12 px-4 max-w-lg mx-auto space-y-8 animate-in fade-in duration-300 slide-in-from-bottom-4">
+      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 pt-6 lg:pt-8 pb-12 animate-in fade-in duration-300 slide-in-from-bottom-4">
+        <div className="max-w-5xl mx-auto space-y-8">
         {/* Wallet Hero Section */}
-        <section className="relative overflow-hidden rounded-xl p-8 bg-gradient-to-br from-primary to-primary-container text-white shadow-md">
+        <section className="relative overflow-hidden rounded-xl lg:rounded-2xl p-8 bg-gradient-to-br from-primary to-primary-container lg:bg-none lg:bg-[#0ca35b] text-white shadow-md">
           <div className="relative z-10 space-y-1">
-            <p className="text-xs uppercase tracking-widest opacity-90 font-semibold">Số dư khả dụng</p>
+            <p className="text-xs uppercase tracking-widest opacity-90 font-semibold lg:mb-2">Số dư khả dụng</p>
             <div className="flex items-baseline gap-1">
-              <span className="text-4xl font-extrabold tracking-tighter">{balance.toLocaleString('vi-VN')}</span>
-              <span className="text-lg font-medium">đ</span>
+              <span className="text-4xl lg:text-[2.5rem] font-extrabold tracking-tighter lg:tracking-tight">{balance.toLocaleString('vi-VN')}</span>
+              <span className="text-lg lg:text-2xl font-medium">đ</span>
             </div>
           </div>
-          <div className="absolute -right-8 -bottom-8 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute -right-8 -bottom-8 w-40 h-40 bg-white/10 rounded-full blur-3xl lg:hidden"></div>
         </section>
 
-        {/* Withdrawal Form */}
-        <section className="space-y-6">
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          {/* LEFT: Withdrawal Form */}
+          <section className="w-full lg:w-3/5 space-y-6 lg:bg-surface-container-lowest lg:p-8 lg:rounded-3xl lg:border lg:border-outline-variant/10 lg:shadow-sm">
           <div className="space-y-4">
             <h2 className="text-xl font-bold tracking-tight px-1 text-on-surface">Rút tiền</h2>
             
@@ -125,7 +127,7 @@ export default function WithdrawClient({ balance, storeId, history }: WithdrawCl
           <button 
             onClick={handleWithdraw}
             disabled={loading}
-            className="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-white font-bold text-lg shadow-md active:scale-95 transition-transform flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-primary-container lg:bg-none lg:bg-[#0ca35b] text-white font-bold text-lg shadow-md active:scale-95 transition-transform flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {loading ? "Đang xử lý..." : (
               <>
@@ -138,8 +140,8 @@ export default function WithdrawClient({ balance, storeId, history }: WithdrawCl
           <p className="text-sm text-center text-on-surface-variant px-6">Thời gian xử lý giao dịch dự kiến từ 5-10 phút.</p>
         </section>
 
-        {/* Transaction History */}
-        <section className="space-y-6 pt-4 pb-12">
+        {/* RIGHT: Transaction History */}
+        <section className="w-full lg:w-2/5 space-y-6 pt-4 lg:pt-0 pb-12 lg:pb-0 lg:bg-surface-container-lowest lg:p-8 lg:rounded-3xl lg:border lg:border-outline-variant/10 lg:shadow-sm lg:min-h-[400px]">
           <div className="flex items-center justify-between px-1">
             <h2 className="text-xl font-bold tracking-tight text-on-surface">Lịch sử giao dịch</h2>
             <button className="text-primary font-semibold text-sm hover:underline">Xem tất cả</button>
@@ -174,6 +176,8 @@ export default function WithdrawClient({ balance, storeId, history }: WithdrawCl
             )}
           </div>
         </section>
+        </div>
+        </div>
       </main>
     </div>
   );

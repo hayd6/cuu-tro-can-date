@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import MarkerClusterGroup from "react-leaflet-cluster";
 
 // Fix Leaflet default marker icons broken in Next.js
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -31,7 +32,7 @@ function createStoreIcon(isUrgent: boolean) {
 
   return L.divIcon({
     html: svg,
-    className: "",
+    className: isUrgent ? "urgent-marker-blink" : "",
     iconSize: [36, 44],
     iconAnchor: [18, 44],
     popupAnchor: [0, -46],
@@ -100,7 +101,7 @@ export default function MapComponent({ stores, onSelectStore, centerOverride }: 
 
   return (
     <MapContainer
-      center={DEFAULT_CENTER}
+      center={center}
       zoom={14}
       zoomControl={false}
       scrollWheelZoom={true}
@@ -118,32 +119,45 @@ export default function MapComponent({ stores, onSelectStore, centerOverride }: 
       {/* Fly to center when prop changes */}
       <FlyToCenter center={center} />
 
-      {/* Current user location */}
-      <Marker position={DEFAULT_CENTER} icon={userLocationIcon} />
+      {/* Blinking Animation Styles */}
+      <style>{`
+        @keyframes blinkMarker {
+          0% { opacity: 1; filter: brightness(1); }
+          50% { opacity: 0.8; filter: brightness(1.3); transform: scale(1.05) translateY(-2px); }
+          100% { opacity: 1; filter: brightness(1); }
+        }
+        .urgent-marker-blink {
+          animation: blinkMarker 1.2s infinite ease-in-out;
+          transform-origin: bottom center;
+        }
+      `}</style>
 
-      {/* Store Markers from real DB */}
-      {stores.map((store) => {
-        const topProduct = store.products[0];
-        const isUrgent = topProduct
-          ? new Date(topProduct.expiryTime).getTime() - Date.now() < 60 * 60000
-          : false;
+      {/* Store Markers from real DB with Clustering */}
+      <MarkerClusterGroup chunkedLoading maxClusterRadius={50}>
+        {stores.map((store) => {
+          const topProduct = store.products[0];
+          // Sắp hết hạn trong vòng 24 giờ
+          const isUrgent = topProduct
+            ? new Date(topProduct.expiryTime).getTime() - Date.now() < 24 * 60 * 60 * 1000
+            : false;
 
-        return (
-          <Marker
-            key={store.id}
-            position={[store.lat, store.lng]}
-            icon={createStoreIcon(isUrgent)}
-            eventHandlers={{
-              click: () => onSelectStore(store.id),
-            }}
-          >
-            <Popup>
-              <div className="text-sm font-semibold">{store.name}</div>
-              <div className="text-xs text-gray-500">{store.address}</div>
-            </Popup>
-          </Marker>
-        );
-      })}
+          return (
+            <Marker
+              key={store.id}
+              position={[store.lat, store.lng]}
+              icon={createStoreIcon(isUrgent)}
+              eventHandlers={{
+                click: () => onSelectStore(store.id),
+              }}
+            >
+              <Popup>
+                <div className="text-sm font-semibold">{store.name}</div>
+                <div className="text-xs text-gray-500">{store.address}</div>
+              </Popup>
+            </Marker>
+          );
+        })}
+      </MarkerClusterGroup>
     </MapContainer>
   );
 }

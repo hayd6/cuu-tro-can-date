@@ -5,7 +5,12 @@ import { prisma } from "@/lib/prisma";
 import { getMerchantStats, getMerchantWalletData } from "@/lib/actions/stores";
 import MerchantWalletClient from "@/components/MerchantWalletClient";
 
-export default async function MerchantWalletPage() {
+export default async function MerchantWalletPage({
+  searchParams,
+}: {
+  searchParams: { timeframe?: string };
+}) {
+  const timeframe = searchParams.timeframe === "month" ? "month" : "week";
   const session = await getServerSession(authOptions);
   const user = session?.user as any;
 
@@ -22,7 +27,7 @@ export default async function MerchantWalletPage() {
     redirect("/merchant/create");
   }
 
-  const stats = await getMerchantStats(store.id);
+  const stats = await getMerchantStats(store.id, timeframe);
   const kpiStats = {
     monthlyRevenue: stats.monthlyRevenue,
     completedOrders: stats.lifetimeCompletedOrders,
@@ -36,6 +41,8 @@ export default async function MerchantWalletPage() {
       balance={stats.totalBalance} 
       history={history} 
       stats={kpiStats} 
+      chartData={stats.chartData}
+      timeframe={timeframe}
     />
   );
 }

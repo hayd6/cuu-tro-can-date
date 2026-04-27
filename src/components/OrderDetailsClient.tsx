@@ -28,7 +28,7 @@ export default function OrderDetailsClient({ order }: OrderDetailsClientProps) {
         </div>
       </header>
 
-      <main className="max-w-md mx-auto px-4 space-y-6 pt-6">
+      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 space-y-6 pt-6 lg:pt-8">
         {/* Active Order Card */}
         <article className="bg-white rounded-3xl overflow-hidden shadow-lg border border-outline-variant/10 animate-in fade-in duration-500 slide-in-from-bottom-4">
           {/* Status & Time Banner */}

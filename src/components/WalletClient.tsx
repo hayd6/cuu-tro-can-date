@@ -70,7 +70,7 @@ export default function WalletClient({ initialPayments, userId }: WalletClientPr
     <div className="bg-surface text-on-surface font-body antialiased min-h-[100dvh]">
       {/* TopAppBar */}
       <header className="w-full top-0 sticky z-50 bg-surface/80 backdrop-blur-md border-b border-surface-container">
-        <div className="flex items-center justify-between px-4 py-3 w-full max-w-2xl mx-auto">
+        <div className="desktop-page-shell-tight flex items-center justify-between px-4 lg:px-6 py-3 w-full">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => router.back()}
@@ -83,7 +83,7 @@ export default function WalletClient({ initialPayments, userId }: WalletClientPr
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-4 pt-6 pb-20 space-y-10 animate-in fade-in duration-300 slide-in-from-bottom-4">
+      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 pt-6 lg:pt-8 pb-20 lg:pb-12 space-y-10 animate-in fade-in duration-300 slide-in-from-bottom-4">
         {/* Hero Message */}
         <section className="space-y-2">
           <h2 className="text-3xl font-bold leading-tight tracking-tight text-on-surface">Quản lý <span className="text-primary">thanh toán.</span></h2>
