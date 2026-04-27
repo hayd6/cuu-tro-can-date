@@ -86,7 +86,7 @@ export default function MyReviewsClient({ initialReviews, stats }: MyReviewsClie
         <div className="bg-outline-variant/20 h-[1px]"></div>
       </header>
 
-      <main className="desktop-page-shell-tight px-4 lg:px-6 xl:px-8 py-6 lg:py-8 space-y-6">
+      <main className="desktop-page-shell-tight px-4 md:px-6 lg:px-6 xl:px-8 py-6 md:py-8 lg:py-8 space-y-6">
         {/* Summary Stats Section */}
         <section className="bg-surface-container-low rounded-xl p-5 flex items-center justify-between shadow-sm">
           <div>

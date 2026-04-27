@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -63,6 +63,20 @@ function FlyToCenter({ center }: { center: [number, number] }) {
   return null;
 }
 
+// Component to auto-open a marker popup when selectedStoreId changes
+function AutoOpenPopup({ selectedStoreId, markerRefs }: { selectedStoreId?: string | null; markerRefs: React.MutableRefObject<Record<string, L.Marker>> }) {
+  const map = useMap();
+  useEffect(() => {
+    if (selectedStoreId && markerRefs.current[selectedStoreId]) {
+      // Small delay to ensure flyTo has started
+      setTimeout(() => {
+        markerRefs.current[selectedStoreId]?.openPopup();
+      }, 400);
+    }
+  }, [selectedStoreId, map, markerRefs]);
+  return null;
+}
+
 export interface StoreMapData {
   id: string;
   name: string;
@@ -88,16 +102,18 @@ interface MapComponentProps {
   stores: StoreMapData[];
   onSelectStore: (storeId: string) => void;
   centerOverride?: { lat: number; lng: number };
+  selectedStoreId?: string | null;
 }
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const TILE_URL = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${MAPBOX_TOKEN}`;
 const DEFAULT_CENTER: [number, number] = [10.762622, 106.660172];
 
-export default function MapComponent({ stores, onSelectStore, centerOverride }: MapComponentProps) {
+export default function MapComponent({ stores, onSelectStore, centerOverride, selectedStoreId }: MapComponentProps) {
   const center: [number, number] = centerOverride
     ? [centerOverride.lat, centerOverride.lng]
     : DEFAULT_CENTER;
+  const markerRefs = useRef<Record<string, L.Marker>>({});
 
   return (
     <MapContainer
@@ -118,6 +134,8 @@ export default function MapComponent({ stores, onSelectStore, centerOverride }: 
 
       {/* Fly to center when prop changes */}
       <FlyToCenter center={center} />
+      {/* Auto-open popup for search result */}
+      <AutoOpenPopup selectedStoreId={selectedStoreId} markerRefs={markerRefs} />
 
       {/* Blinking Animation Styles */}
       <style>{`
@@ -146,6 +164,9 @@ export default function MapComponent({ stores, onSelectStore, centerOverride }: 
               key={store.id}
               position={[store.lat, store.lng]}
               icon={createStoreIcon(isUrgent)}
+              ref={(ref) => {
+                if (ref) markerRefs.current[store.id] = ref;
+              }}
               eventHandlers={{
                 click: () => onSelectStore(store.id),
               }}

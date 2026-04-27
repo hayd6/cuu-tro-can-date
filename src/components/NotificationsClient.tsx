@@ -111,7 +111,7 @@ export default function NotificationsClient({
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 lg:px-6 xl:px-8 py-6 lg:py-10 space-y-8 lg:space-y-12 animate-in fade-in duration-300">
+      <main className="max-w-4xl mx-auto px-4 md:px-6 lg:px-6 xl:px-8 py-6 md:py-8 lg:py-10 space-y-8 lg:space-y-12 animate-in fade-in duration-300">
         
         {/* Desktop Title Header */}
         <div className="hidden lg:block mb-10">
@@ -130,7 +130,7 @@ export default function NotificationsClient({
               <span className="text-xs font-bold tracking-widest text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-full">Hôm nay</span>
               <div className="h-px flex-1 bg-slate-200/60"></div>
             </div>
-            <div className="grid gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
               {groups.today.map((n) => (
                 <div 
                   key={n.id}
@@ -160,7 +160,7 @@ export default function NotificationsClient({
               <span className="text-xs font-bold tracking-widest text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-full">Hôm qua</span>
               <div className="h-px flex-1 bg-slate-200/60"></div>
             </div>
-            <div className="grid gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
               {groups.yesterday.map((n) => (
                 <div 
                   key={n.id}
@@ -190,7 +190,7 @@ export default function NotificationsClient({
               <span className="text-xs font-bold tracking-widest text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-full">Cũ hơn</span>
               <div className="h-px flex-1 bg-slate-200/60"></div>
             </div>
-            <div className="grid gap-4 opacity-80">
+            <div className="grid gap-4 md:grid-cols-2 opacity-80">
               {groups.older.map((n) => (
                 <div 
                   key={n.id}

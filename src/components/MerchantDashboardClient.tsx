@@ -119,10 +119,10 @@ export default function MerchantDashboardClient({ store, stats, recentOrders }: 
       </header>
 
       <main className="max-w-7xl mx-auto px-4 lg:px-8 pt-4 pb-32 lg:pt-3 lg:pb-20 animate-in fade-in duration-300">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Profile & Stats */}
-          <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+          <div className="md:col-span-5 lg:col-span-4 space-y-6 md:sticky md:top-24">
             
             {/* Desktop Store Profile Card */}
             <section className="hidden lg:block bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10 shadow-sm">
@@ -160,18 +160,44 @@ export default function MerchantDashboardClient({ store, stats, recentOrders }: 
             </section>
 
             {/* Quick Actions */}
-            <section className="grid grid-cols-2 gap-4">
+            <section className="grid grid-cols-2 md:flex md:flex-col lg:grid lg:grid-cols-2 gap-4">
+              {/* Tablet specific buttons */}
               <Link
-                href="/merchant/listings"
-                className="bg-gradient-to-br from-primary to-primary-container text-white flex flex-col items-center justify-center p-4 rounded-2xl shadow-[0_12px_32px_-4px_rgba(20,27,43,0.08)] hover:shadow-lg active:scale-95 transition-all text-center"
+                href="/merchant/create"
+                className="hidden md:flex lg:hidden bg-gradient-to-r from-emerald-600 to-teal-500 text-white items-center p-6 rounded-2xl shadow-[0_12px_32px_-4px_rgba(20,27,43,0.08)] hover:shadow-lg active:scale-98 transition-all"
+              >
+                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center mr-4 flex-shrink-0">
+                  <span className="material-symbols-outlined text-3xl text-white">add_shopping_cart</span>
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="font-bold text-lg tracking-tight">Đăng túi xả hàng</span>
+                  <span className="text-xs text-white/80 mt-0.5">Đăng món cần bán</span>
+                </div>
+              </Link>
+              <Link
+                href="/merchant/create"
+                className="flex md:hidden lg:flex bg-gradient-to-br from-primary to-primary-container text-white flex-col items-center justify-center p-4 rounded-2xl shadow-[0_12px_32px_-4px_rgba(20,27,43,0.08)] hover:shadow-lg active:scale-95 transition-all text-center"
               >
                 <span className="material-symbols-outlined text-2xl mb-1">add_shopping_cart</span>
                 <span className="font-bold text-sm">Đăng túi xả hàng</span>
                 <span className="text-[10px] text-white/80 mt-1">Đăng món cần bán</span>
               </Link>
+
               <Link
                 href="/merchant/scan"
-                className="bg-inverse-surface text-inverse-on-surface flex flex-col items-center justify-center p-4 rounded-2xl shadow-[0_12px_32px_-4px_rgba(20,27,43,0.08)] hover:shadow-lg active:scale-95 transition-all text-center"
+                className="hidden md:flex lg:hidden bg-[#1e293b] text-white items-center p-6 rounded-2xl shadow-[0_12px_32px_-4px_rgba(20,27,43,0.08)] hover:shadow-lg active:scale-98 transition-all"
+              >
+                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mr-4 flex-shrink-0">
+                  <span className="material-symbols-outlined text-3xl text-white">qr_code_scanner</span>
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="font-bold text-lg tracking-tight">Quét mã QR</span>
+                  <span className="text-xs text-white/80 mt-0.5">Xác nhận đơn hàng</span>
+                </div>
+              </Link>
+              <Link
+                href="/merchant/scan"
+                className="flex md:hidden lg:flex bg-inverse-surface text-inverse-on-surface flex-col items-center justify-center p-4 rounded-2xl shadow-[0_12px_32px_-4px_rgba(20,27,43,0.08)] hover:shadow-lg active:scale-95 transition-all text-center"
               >
                 <span className="material-symbols-outlined text-2xl mb-1">qr_code_scanner</span>
                 <span className="font-bold text-sm">Quét mã QR</span>
@@ -180,10 +206,44 @@ export default function MerchantDashboardClient({ store, stats, recentOrders }: 
             </section>
 
             {/* Today's Real Stats */}
-            <section className="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10 shadow-sm flex flex-col justify-between">
+            <section className="bg-surface-container-lowest p-6 rounded-3xl border border-outline-variant/10 shadow-sm flex flex-col justify-between">
               <div>
-                <h2 className="text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant mb-4">Chỉ số hôm nay</h2>
-                <div className="grid grid-cols-3 gap-3">
+                <h2 className="text-[11px] font-bold uppercase tracking-[0.15em] text-on-surface-variant mb-4 px-1">Chỉ số hôm nay</h2>
+                
+                {/* Tablet view */}
+                <div className="hidden md:flex lg:hidden flex-col gap-3">
+                  <Link
+                    href="/merchant/orders?tab=pending"
+                    className="bg-[#f8fafc] p-5 rounded-2xl text-center active:scale-95 transition-transform hover:bg-slate-100/80 border border-slate-100 flex flex-col items-center justify-center"
+                  >
+                    <span className="block text-4xl font-black text-[#dc2626] mb-2">{stats.pendingOrders}</span>
+                    <span className="text-xs font-extrabold uppercase tracking-widest text-slate-500">Chờ lấy</span>
+                    <span className="block text-[10px] font-medium text-slate-400 mt-0.5">đơn</span>
+                  </Link>
+                  <Link
+                    href="/merchant/orders?tab=completed"
+                    className="bg-[#f8fafc] p-5 rounded-2xl text-center active:scale-95 transition-transform hover:bg-slate-100/80 border border-slate-100 flex flex-col items-center justify-center"
+                  >
+                    <span className="block text-4xl font-black text-[#16a34a] mb-2">{stats.completedToday}</span>
+                    <span className="text-xs font-extrabold uppercase tracking-widest text-slate-500">Xong</span>
+                    <span className="block text-[10px] font-medium text-slate-400 mt-0.5">đơn</span>
+                  </Link>
+                  <Link
+                    href="/merchant/revenue"
+                    className="bg-[#f8fafc] p-5 rounded-2xl text-center active:scale-95 transition-transform hover:bg-slate-100/80 border border-slate-100 flex flex-col items-center justify-center"
+                  >
+                    <span className="block text-3xl font-black text-slate-800 mb-2">
+                      {stats.revenueToday >= 1000000
+                        ? `${(stats.revenueToday / 1000000).toFixed(1)}M`
+                        : `${Math.round(stats.revenueToday / 1000)}K`}
+                    </span>
+                    <span className="text-xs font-extrabold uppercase tracking-widest text-slate-500">Doanh thu</span>
+                    <span className="block text-[10px] font-medium text-slate-400 mt-0.5">hôm nay</span>
+                  </Link>
+                </div>
+
+                {/* Mobile/Desktop view */}
+                <div className="grid grid-cols-3 md:hidden lg:grid gap-3">
                   <Link
                     href="/merchant/orders?tab=pending"
                     className="bg-surface-container-low p-3 rounded-xl text-center active:scale-95 transition-transform hover:bg-surface-container-high block"
@@ -218,7 +278,7 @@ export default function MerchantDashboardClient({ store, stats, recentOrders }: 
           </div>
 
           {/* Right Column: Active Listings & Orders */}
-          <div className="lg:col-span-8 space-y-8">
+          <div className="md:col-span-7 lg:col-span-8 space-y-8">
             {/* Active Listings from DB */}
             <section className="space-y-4">
               <div className="flex justify-between items-end">
@@ -233,11 +293,11 @@ export default function MerchantDashboardClient({ store, stats, recentOrders }: 
                   <p className="text-[10px] uppercase tracking-widest mt-1">Đăng để giảm lãng phí</p>
                 </div>
               ) : (
-                <div className="flex flex-col lg:flex-row gap-4 lg:overflow-x-auto hide-scrollbar pb-2 lg:snap-x">
+                <div className="flex flex-col md:grid md:grid-cols-2 lg:flex lg:flex-row gap-4 lg:overflow-x-auto hide-scrollbar pb-2 lg:snap-x">
                   {activeProductsList.slice(0, 4).map((product) => (
                     <div
                       key={product.id}
-                      className="w-full lg:w-auto lg:min-w-[280px] lg:snap-start bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/5 flex flex-col shrink-0"
+                      className="w-full md:w-full lg:w-auto lg:min-w-[280px] lg:snap-start bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_12px_32px_-4px_rgba(20,27,43,0.04)] border border-outline-variant/5 flex flex-col shrink-0"
                     >
                       <div className="relative h-40 w-full flex-shrink-0">
                         <img

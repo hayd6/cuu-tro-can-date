@@ -144,10 +144,10 @@ export default function CreateProductPage() {
       </nav>
 
       <main className="max-w-5xl mx-auto px-5 lg:px-8 py-8">
-        <form className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" onSubmit={handleSubmit}>
+        <form className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start" onSubmit={handleSubmit}>
           
           {/* LEFT COLUMN: Image Upload */}
-          <div className="lg:col-span-5">
+          <div className="md:col-span-5 lg:col-span-5">
             <div 
               onClick={() => document.getElementById('product-img')?.click()}
               className="aspect-square w-full rounded-[24px] bg-white flex flex-col items-center justify-center border-2 border-dashed border-slate-200 hover:border-emerald-600/50 transition-all cursor-pointer relative overflow-hidden shadow-sm"
@@ -178,7 +178,7 @@ export default function CreateProductPage() {
           </div>
 
           {/* RIGHT COLUMN: Form Inputs */}
-          <div className="lg:col-span-7 space-y-5">
+          <div className="md:col-span-7 lg:col-span-7 space-y-5">
             {/* Product Name */}
             <div>
               <label className="block text-[11px] font-bold tracking-wider uppercase text-on-surface-variant mb-2" htmlFor="product_name">

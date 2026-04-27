@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { switchUserRole } from "@/lib/actions/users";
 import { useSession, signOut } from "next-auth/react";
+import defaultAvatar from "@/assets/images/avatar-mac-dinh.jpg";
 
 interface UserProfileProps {
   user: {
@@ -89,16 +90,16 @@ export default function ProfileClient({ user: initialUser, greenStats }: UserPro
         </Link>
       </header>
 
-      <main className="max-w-md lg:max-w-7xl mx-auto px-4 pt-8 pb-32 space-y-8 animate-in fade-in duration-300">
+      <main className="max-w-md md:max-w-7xl mx-auto px-4 pt-8 pb-32 space-y-8 animate-in fade-in duration-300">
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           {/* User Card */}
-          <section className="flex flex-col items-center text-center lg:col-span-4 lg:bg-white lg:p-8 lg:rounded-2xl lg:border lg:border-slate-100 lg:shadow-sm">
+          <section className="flex flex-col items-center text-center md:col-span-4 md:bg-white md:p-8 md:rounded-2xl md:border md:border-slate-100 md:shadow-sm">
             <div className="relative mb-4">
               <img
                 alt="Profile Avatar"
                 className="w-24 h-24 rounded-full object-cover border border-slate-100 shadow-sm flex-shrink-0"
-                src={user.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"}
+                src={user.avatarUrl || defaultAvatar.src}
               />
             </div>
             <h2 className="text-xl font-bold tracking-tight text-slate-900">{user.name || TEXT.fallbackUser}</h2>
@@ -111,7 +112,7 @@ export default function ProfileClient({ user: initialUser, greenStats }: UserPro
           </section>
 
           {/* 4 Stats Cards */}
-          <section className="space-y-4 lg:col-span-8">
+          <section className="space-y-4 md:col-span-8">
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-emerald-700 text-xl">eco</span>
@@ -157,7 +158,7 @@ export default function ProfileClient({ user: initialUser, greenStats }: UserPro
         </div>
 
         {/* Sections Block */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 items-start">
           {/* Left Column (Management) */}
           <div className="space-y-6">
             {currentRole !== "MERCHANT" && (

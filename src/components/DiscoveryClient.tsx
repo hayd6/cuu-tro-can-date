@@ -62,6 +62,25 @@ export default function DiscoveryClient({ stores }: DiscoveryClientProps) {
     setSearchQuery(urlQuery);
   }, [urlQuery]);
 
+  // Auto-navigate map to first matching store when search query changes
+  // Only move map + highlight marker, do NOT open product panel (selectedPin stays false)
+  useEffect(() => {
+    if (searchQuery.trim().length >= 2) {
+      const q = searchQuery.toLowerCase();
+      const match = stores.find((s) =>
+        s.name.toLowerCase().includes(q) ||
+        s.products.some(p => p.name.toLowerCase().includes(q))
+      );
+      if (match) {
+        setSelectedStoreId(match.id);
+        setMapCenter({ lat: match.lat, lng: match.lng });
+      }
+    } else if (searchQuery.trim().length === 0) {
+      setSelectedPin(false);
+      setSelectedStoreId(null);
+    }
+  }, [searchQuery, stores]);
+
   useEffect(() => {
     if (searchParams.get("filter") === "true") {
       setIsFilterOpen(true);
@@ -132,8 +151,10 @@ export default function DiscoveryClient({ stores }: DiscoveryClientProps) {
       if (!hasUrgent) return false;
     }
 
-    // 1. Text Search
-    const matchesSearch = store.name.toLowerCase().includes(searchQuery.toLowerCase());
+    // 1. Text Search (store name OR product name)
+    const q = searchQuery.toLowerCase();
+    const matchesSearch = !q || store.name.toLowerCase().includes(q) || 
+      store.products.some(p => p.name.toLowerCase().includes(q));
     
     // 2. Chip Category & Bottom Sheet Category Filter
     // Combine both: prioritize specifically selected categories if any, else chip
@@ -318,6 +339,7 @@ export default function DiscoveryClient({ stores }: DiscoveryClientProps) {
             stores={filteredStores}
             onSelectStore={handleSelectStore}
             centerOverride={mapCenter}
+            selectedStoreId={selectedStoreId}
           />
         </div>
 
@@ -338,7 +360,7 @@ export default function DiscoveryClient({ stores }: DiscoveryClientProps) {
                 <div className="flex-1 min-w-0">
                   <input
                     type="text"
-                    placeholder="Tìm tên quán..."
+                    placeholder="Tìm quán hoặc món ăn..."
                     className="w-full bg-transparent focus:outline-none text-on-surface py-2 text-sm"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}

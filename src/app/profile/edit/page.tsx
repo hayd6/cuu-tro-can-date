@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { updateUserProfile, uploadAvatar } from "@/lib/actions/users";
 
+import defaultAvatar from "@/assets/images/avatar-mac-dinh.jpg";
+
 export default function EditProfilePage() {
   const router = useRouter();
   const { data: session, update } = useSession();
@@ -104,7 +106,7 @@ export default function EditProfilePage() {
             <div className="w-full lg:w-1/3 flex-shrink-0 flex flex-col items-center lg:pt-4">
             <div className="relative group cursor-pointer" onClick={() => document.getElementById('avatar-input')?.click()}>
               <img 
-                src={user?.avatarUrl || user?.image || "https://lh3.googleusercontent.com/aida-public/AB6AXuDjxawOqSKQhMB0xhPirT7jQ8D4lDk39DWEhGbpVRVP-M1nJEY-BAL3BThynaGWhjFvr3_Utb1Qb9vdDUWFbcvgt6CRXW2rWSjOezEbQlRvLnNfbfFwq8eMPZZrRuxsTsIhM2EzfAytsdQCX4dYlBASDKWTNXJ8MrAJ4bz08P5Ya5L375GfSXDvqCPry9ydUg110OS8AwOI7vJuK-ziWJ7h9B4xOcrkoGB8FmfaHMiE2hnFo0vvWEXSp4wF6rLbQwsFEuyxfzsJbVM"}
+                src={user?.avatarUrl || user?.image || defaultAvatar.src}
                 alt="Avatar"
                 className={`w-24 h-24 rounded-full object-cover border-2 border-outline-variant/20 ${uploading ? 'opacity-50' : ''}`}
               />

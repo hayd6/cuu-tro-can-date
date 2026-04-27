@@ -72,7 +72,7 @@ export default function MerchantWalletClient({ balance, history, stats, chartDat
         </section>
 
         {/* Chỉ số KPI */}
-        <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div className="bg-surface-container-lowest rounded-2xl p-5 relative shadow-sm border border-outline-variant/10">
             <div className="flex items-center gap-2 text-on-surface-variant mb-2">
               <span className="material-symbols-outlined text-lg">trending_up</span>

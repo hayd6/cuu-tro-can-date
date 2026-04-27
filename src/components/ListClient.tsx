@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import FilterBottomSheet from "@/components/FilterBottomSheet";
 
 type Product = {
@@ -37,6 +38,9 @@ const CATEGORY_MAP: Record<string, string> = {
 };
 
 export default function ListClient({ initialProducts }: ListClientProps) {
+  const searchParams = useSearchParams();
+  const urlQuery = searchParams.get("search") || "";
+  const [searchQuery, setSearchQuery] = useState(urlQuery);
   const [activeFilter, setActiveFilter] = useState("Tất cả");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isUrgentOnly, setIsUrgentOnly] = useState(false);
@@ -47,6 +51,11 @@ export default function ListClient({ initialProducts }: ListClientProps) {
     times: [] as string[]
   });
   const [currentAddress, setCurrentAddress] = useState("123 Lê Lợi, Quận 1, TP.HCM");
+
+  // Sync from URL search param
+  useEffect(() => {
+    setSearchQuery(urlQuery);
+  }, [urlQuery]);
 
   const handleGps = () => {
     if ("geolocation" in navigator) {
@@ -77,7 +86,15 @@ export default function ListClient({ initialProducts }: ListClientProps) {
       if (hoursLeft > 24 || hoursLeft < 0) return false;
     }
 
-    // 1. Chip Category & Bottom Sheet Category Filter
+    // 1. Text Search (product name OR store name)
+    const q = searchQuery.toLowerCase();
+    if (q) {
+      const matchesSearch = item.name.toLowerCase().includes(q) || 
+        item.store.name.toLowerCase().includes(q);
+      if (!matchesSearch) return false;
+    }
+
+    // 2. Chip Category & Bottom Sheet Category Filter
     const activeCategories = filters.categories.length > 0 ? filters.categories : (activeFilter !== "Tất cả" ? [activeFilter] : []);
     
     let matchesCategory = true;
@@ -101,7 +118,7 @@ export default function ListClient({ initialProducts }: ListClientProps) {
       }
     }
 
-    // 2. Price Filter
+    // 3. Price Filter
     let matchesPrice = true;
     if (filters.prices.length > 0) {
       matchesPrice = filters.prices.some(priceRange => {
@@ -124,7 +141,6 @@ export default function ListClient({ initialProducts }: ListClientProps) {
 
   return (
     <div className="relative w-full min-h-[100dvh] bg-surface pb-32">
-      {/* Top Bar (Sticky) */}
       {/* Top Bar (Sticky) - Hidden on Desktop */}
       <header className="sticky top-0 left-0 w-full z-50 p-4 space-y-3 pb-4 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm lg:hidden">
         <div className="max-w-md mx-auto w-full space-y-2">
@@ -145,6 +161,8 @@ export default function ListClient({ initialProducts }: ListClientProps) {
               className="bg-transparent border-none outline-none focus:ring-0 text-on-surface font-body flex-1 text-sm p-0 placeholder:text-on-surface-variant/60"
               placeholder="Tìm quán cứu trợ quanh bạn..."
               type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
             <div className="h-6 w-[1px] bg-outline-variant/30 mx-3"></div>
             <button onClick={() => setIsFilterOpen(true)}>
@@ -182,10 +200,10 @@ export default function ListClient({ initialProducts }: ListClientProps) {
       </header>
 
       {/* Product List */}
-      <main className="max-w-7xl mx-auto p-4 lg:p-8 space-y-6">
+      <main className="max-w-7xl mx-auto p-4 md:p-6 lg:p-8 space-y-6">
         <div className="flex items-center justify-between px-1 mb-2">
           <div>
-            <h2 className="font-extrabold text-on-surface text-lg lg:text-2xl">Gợi ý cho bạn</h2>
+            <h2 className="font-extrabold text-on-surface text-lg md:text-xl lg:text-2xl">Gợi ý cho bạn</h2>
             <p className="text-xs text-on-surface-variant mt-1 hidden lg:block">Các phần ăn đang chờ bạn giải cứu</p>
           </div>
           <div className="flex items-center gap-3">
@@ -299,7 +317,7 @@ export default function ListClient({ initialProducts }: ListClientProps) {
       {/* Floating Map Toggle Button */}
       <Link
         href="/"
-        className="fixed bottom-[110px] left-1/2 -translate-x-1/2 z-40 bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-full font-bold text-sm shadow-xl flex items-center gap-2 active:scale-95 transition-transform border border-white/10"
+        className="fixed bottom-[110px] lg:bottom-6 left-1/2 -translate-x-1/2 z-40 bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-full font-bold text-sm shadow-xl flex items-center gap-2 active:scale-95 transition-transform border border-white/10"
       >
         <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>map</span>
         Bản đồ
