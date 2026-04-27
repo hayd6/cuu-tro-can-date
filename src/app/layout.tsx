@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -30,9 +31,11 @@ export default function RootLayout({
         <Providers>
           <AppProvider>
             <OneSignalInit />
-            <GlobalShell>
-              {children}
-            </GlobalShell>
+            <Suspense fallback={null}>
+              <GlobalShell>
+                {children}
+              </GlobalShell>
+            </Suspense>
           </AppProvider>
         </Providers>
       </body>

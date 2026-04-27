@@ -19,6 +19,11 @@ export default function Layout({ children }: LayoutProps) {
   const searchParams = useSearchParams();
   const { data: session } = useSession();
   const { isSidebarExpanded, toggleSidebar, role, currentAddress } = useAppContext();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const buyerTabs = [
     { name: "Khám phá", path: "/", icon: "explore" },
@@ -191,7 +196,7 @@ export default function Layout({ children }: LayoutProps) {
         {!isAuthRoute && (
           <aside 
             style={{ 
-              width: isSidebarExpanded ? "var(--sidebar-width-expanded)" : "var(--sidebar-width-collapsed)" 
+              width: (!mounted || isSidebarExpanded) ? "var(--sidebar-width-expanded)" : "var(--sidebar-width-collapsed)" 
             }}
             className="hidden lg:flex flex-col bg-surface-container-lowest border-r border-outline-variant/20 py-6 px-3 gap-2 transition-all duration-300 ease-in-out flex-shrink-0 overflow-y-auto"
           >
@@ -209,7 +214,7 @@ export default function Layout({ children }: LayoutProps) {
                     <span className="material-symbols-outlined" style={isActive ? { fontVariationSettings: "'FILL' 1" } : { fontVariationSettings: "'FILL' 0" }}>
                       {tab.icon}
                     </span>
-                    {isSidebarExpanded && (
+                    {(!mounted || isSidebarExpanded) && (
                       <span className="font-sans text-sm whitespace-nowrap">{tab.name}</span>
                     )}
                   </Link>
@@ -226,7 +231,7 @@ export default function Layout({ children }: LayoutProps) {
                 <span className="material-symbols-outlined" style={pathname === '/settings' ? { fontVariationSettings: "'FILL' 1" } : { fontVariationSettings: "'FILL' 0" }}>
                   settings
                 </span>
-                {isSidebarExpanded && (
+                {(!mounted || isSidebarExpanded) && (
                   <span className="font-sans text-sm whitespace-nowrap">Cài đặt chung</span>
                 )}
               </Link>

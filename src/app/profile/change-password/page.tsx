@@ -22,7 +22,7 @@ export default function ChangePasswordPage() {
     setError("");
     setSuccess(false);
 
-    if (!session?.user?.id) {
+    if (!(session?.user as any)?.id) {
       setError("Vui lòng đăng nhập để thực hiện thay đổi.");
       return;
     }
@@ -39,7 +39,7 @@ export default function ChangePasswordPage() {
 
     setLoading(true);
     try {
-      await changeUserPassword((session.user as any).id, { oldPass, newPass });
+      await changeUserPassword((session!.user as any).id, { oldPass, newPass });
       setSuccess(true);
       setOldPass("");
       setNewPass("");

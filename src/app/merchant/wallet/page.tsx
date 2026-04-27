@@ -8,9 +8,10 @@ import MerchantWalletClient from "@/components/MerchantWalletClient";
 export default async function MerchantWalletPage({
   searchParams,
 }: {
-  searchParams: { timeframe?: string };
+  searchParams: Promise<{ timeframe?: string }>;
 }) {
-  const timeframe = searchParams.timeframe === "month" ? "month" : "week";
+  const { timeframe: timeframeParam } = await searchParams;
+  const timeframe = timeframeParam === "month" ? "month" : "week";
   const session = await getServerSession(authOptions);
   const user = session?.user as any;
 

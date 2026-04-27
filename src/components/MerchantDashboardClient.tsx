@@ -22,6 +22,7 @@ type Store = {
   id: string;
   name: string;
   imageUrl: string | null;
+  address?: string | null;
   rating: number;
   isActive: boolean;
   products: Product[];

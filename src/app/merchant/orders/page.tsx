@@ -29,5 +29,5 @@ export default async function MerchantOrdersPage() {
 
   const orders = store ? await getOrdersByStore(store.id) : [];
 
-  return <MerchantOrdersClient orders={orders} />;
+  return <MerchantOrdersClient orders={orders} storeId={store?.id || ""} />;
 }

@@ -29,7 +29,7 @@ const STATUS_MAP: Record<string, string> = {
   CANCELLED: "Đã hủy",
 };
 
-export default function MerchantOrdersClient({ orders }: { orders: Order[] }) {
+export default function MerchantOrdersClient({ orders, storeId }: { orders: Order[]; storeId: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab") as "pending" | "completed" | "cancelled" | null;
@@ -47,7 +47,7 @@ export default function MerchantOrdersClient({ orders }: { orders: Order[] }) {
   const cancelledOrders = orders.filter((o) => o.status === "CANCELLED");
 
   const handleConfirmPickup = async (orderId: string) => {
-    await confirmPickup(orderId);
+    await confirmPickup(orderId, storeId);
     router.refresh();
   };
 
