@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/AppProvider";
+import Link from "next/link";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -71,7 +72,7 @@ export default function SettingsPage() {
             
             <div className="h-[1px] bg-surface-container-low mx-5"></div>
 
-            <div className="w-full flex items-center justify-between px-5 py-4 hover:bg-surface-container-low transition-colors group cursor-pointer">
+            <Link href="/settings/about" className="w-full flex items-center justify-between px-5 py-4 hover:bg-surface-container-low transition-colors group cursor-pointer">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center">
                   <span className="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">info</span>
@@ -82,7 +83,7 @@ export default function SettingsPage() {
                 </div>
               </div>
               <span className="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
-            </div>
+            </Link>
            </div>
         </section>
       </main>
