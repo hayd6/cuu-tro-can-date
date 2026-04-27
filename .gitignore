@@ -26,7 +26,10 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+<<<<<<< HEAD
 .env
+=======
+>>>>>>> feature/tablet
 .env*.local
 
 # vercel

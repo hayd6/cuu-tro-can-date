@@ -99,8 +99,13 @@ export default function MerchantProfileClient({ store, stats }: MerchantProfileC
         </div>
 
         <section className="desktop-page-card p-6 lg:p-8">
+<<<<<<< HEAD
           <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
             <div className="flex flex-col items-center text-center space-y-4 lg:col-span-4 lg:items-start lg:text-left">
+=======
+          <div className="grid gap-8 md:grid-cols-12 lg:grid-cols-12 md:items-start lg:items-start">
+            <div className="flex flex-col items-center text-center space-y-4 md:col-span-4 lg:col-span-4 md:items-start md:text-left lg:items-start lg:text-left">
+>>>>>>> feature/tablet
               <div className="relative">
                 <div className="w-24 h-24 lg:w-28 lg:h-28 rounded-full p-1 bg-gradient-to-tr from-primary to-primary-container shadow-lg">
                   <img
@@ -115,7 +120,11 @@ export default function MerchantProfileClient({ store, stats }: MerchantProfileC
               </div>
               <div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-on-surface tracking-tight">{store.name}</h2>
+<<<<<<< HEAD
                 <p className="text-on-surface-variant flex items-center justify-center lg:justify-start gap-1.5 mt-1 font-medium">
+=======
+                <p className="text-on-surface-variant flex items-center justify-center md:justify-start lg:justify-start gap-1.5 mt-1 font-medium">
+>>>>>>> feature/tablet
                   <span className="material-symbols-outlined text-sm">call</span>
                   {store.owner?.phone || TEXT.phoneFallback}
                 </p>
@@ -125,7 +134,11 @@ export default function MerchantProfileClient({ store, stats }: MerchantProfileC
               </Link>
             </div>
 
+<<<<<<< HEAD
             <div className="lg:col-span-8 space-y-4">
+=======
+            <div className="md:col-span-8 lg:col-span-8 space-y-4">
+>>>>>>> feature/tablet
               <div className="flex items-center justify-between px-1">
                 <h2 className="text-lg font-semibold tracking-tighter text-on-surface">{TEXT.greenPartner}</h2>
                 <span className="tracking-wider uppercase text-primary font-bold text-xs bg-primary-container/20 px-2 py-1 rounded">Seller Dashboard</span>

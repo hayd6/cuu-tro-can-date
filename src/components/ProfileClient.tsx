@@ -89,11 +89,19 @@ export default function ProfileClient({ user: initialUser, greenStats }: UserPro
         </Link>
       </header>
 
+<<<<<<< HEAD
       <main className="max-w-md lg:max-w-7xl mx-auto px-4 pt-8 pb-32 space-y-8 animate-in fade-in duration-300">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* User Card */}
           <section className="flex flex-col items-center text-center lg:col-span-4 lg:bg-white lg:p-8 lg:rounded-2xl lg:border lg:border-slate-100 lg:shadow-sm">
+=======
+      <main className="max-w-md md:max-w-7xl mx-auto px-4 pt-8 pb-32 space-y-8 animate-in fade-in duration-300">
+        
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+          {/* User Card */}
+          <section className="flex flex-col items-center text-center md:col-span-4 md:bg-white md:p-8 md:rounded-2xl md:border md:border-slate-100 md:shadow-sm">
+>>>>>>> feature/tablet
             <div className="relative mb-4">
               <img
                 alt="Profile Avatar"
@@ -111,7 +119,11 @@ export default function ProfileClient({ user: initialUser, greenStats }: UserPro
           </section>
 
           {/* 4 Stats Cards */}
+<<<<<<< HEAD
           <section className="space-y-4 lg:col-span-8">
+=======
+          <section className="space-y-4 md:col-span-8">
+>>>>>>> feature/tablet
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-emerald-700 text-xl">eco</span>
@@ -157,7 +169,11 @@ export default function ProfileClient({ user: initialUser, greenStats }: UserPro
         </div>
 
         {/* Sections Block */}
+<<<<<<< HEAD
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+=======
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 items-start">
+>>>>>>> feature/tablet
           {/* Left Column (Management) */}
           <div className="space-y-6">
             {currentRole !== "MERCHANT" && (

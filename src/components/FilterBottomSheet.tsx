@@ -79,14 +79,24 @@ export default function FilterBottomSheet({
       {isOpen && (
         <>
           {/* ======================================================= */}
+<<<<<<< HEAD
           {/* DESKTOP FLOATING VIEW (sm and up) */}
           {/* ======================================================= */}
           <div className="fixed inset-0 z-[100] hidden sm:flex justify-end items-start p-6 pt-24 lg:pt-28 pointer-events-none">
+=======
+          {/* DESKTOP FLOATING VIEW (lg and up) */}
+          {/* ======================================================= */}
+          <div className="fixed inset-0 z-[100] hidden lg:flex justify-end items-start p-6 pt-24 lg:pt-28 pointer-events-none">
+>>>>>>> feature/tablet
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+<<<<<<< HEAD
               className="absolute inset-0 bg-black/10 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none pointer-events-auto"
+=======
+              className="absolute inset-0 bg-black/10 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none pointer-events-auto"
+>>>>>>> feature/tablet
               onClick={onClose}
             />
             
@@ -95,7 +105,11 @@ export default function FilterBottomSheet({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
+<<<<<<< HEAD
               className="bg-surface text-on-surface sm:max-h-[70vh] w-[420px] rounded-3xl flex flex-col overflow-hidden relative z-10 shadow-2xl pointer-events-auto border border-outline-variant/10"
+=======
+              className="bg-surface text-on-surface lg:max-h-[70vh] w-[420px] rounded-3xl flex flex-col overflow-hidden relative z-10 shadow-2xl pointer-events-auto border border-outline-variant/10"
+>>>>>>> feature/tablet
             >
               {/* TopAppBar */}
               <header className="flex justify-between items-center px-5 py-4 border-b border-outline-variant/10 bg-surface">
@@ -204,7 +218,11 @@ export default function FilterBottomSheet({
           {/* ======================================================= */}
           {/* MOBILE VIEW (Default sliding bottom sheet) */}
           {/* ======================================================= */}
+<<<<<<< HEAD
           <div className="fixed inset-0 z-[100] flex flex-col justify-end sm:hidden">
+=======
+          <div className="fixed inset-0 z-[100] flex flex-col justify-end lg:hidden">
+>>>>>>> feature/tablet
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
