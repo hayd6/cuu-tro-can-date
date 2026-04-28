@@ -16,26 +16,39 @@ L.Icon.Default.mergeOptions({
 
 // Custom SVG marker factory
 function createStoreIcon(isUrgent: boolean) {
-  const color = isUrgent ? "#E53935" : "#008C49";
+  const color = isUrgent ? "#D32F2F" : "#059669";
 
   const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="44" viewBox="0 0 36 44">
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="52" viewBox="0 0 40 52">
       <defs>
-        <filter id="shadow">
-          <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.25)"/>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
         </filter>
+        <linearGradient id="gradUrgent" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FF5252" />
+          <stop offset="100%" stop-color="#D32F2F" />
+        </linearGradient>
+        <linearGradient id="gradNormal" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#10B981" />
+          <stop offset="100%" stop-color="#059669" />
+        </linearGradient>
       </defs>
-      <path d="M18 2C10.268 2 4 8.268 4 16c0 11 14 26 14 26S32 27 32 16C32 8.268 25.732 2 18 2z"
-        fill="${color}" stroke="white" stroke-width="2" filter="url(#shadow)"/>
-      <circle cx="18" cy="16" r="6" fill="white" fill-opacity="0.9"/>
+      <path d="M20 2C10.059 2 2 10.059 2 20C2 31.5 20 50 20 50S38 31.5 38 20C38 10.059 29.941 2 20 2Z" 
+            fill="url(#${isUrgent ? "gradUrgent" : "gradNormal"})" 
+            stroke="white" 
+            stroke-width="2.5" 
+            filter="url(#shadow)"/>
+      <circle cx="20" cy="19" r="10" fill="white" />
+      <path d="M20 12.5l-6 4.5v1.5h12v-1.5l-6-4.5zm-5 7.5v6h2v-6h-2zm4 0v6h2v-6h-2zm4 0v6h2v-6h-2zm-7 7.5h10v1.5h-10v-1.5z" 
+            fill="${color}"/>
     </svg>`;
 
   return L.divIcon({
     html: svg,
     className: isUrgent ? "urgent-marker-blink" : "",
-    iconSize: [36, 44],
-    iconAnchor: [18, 44],
-    popupAnchor: [0, -46],
+    iconSize: [40, 52],
+    iconAnchor: [20, 52],
+    popupAnchor: [0, -54],
   });
 }
 
@@ -137,21 +150,51 @@ export default function MapComponent({ stores, onSelectStore, centerOverride, se
       {/* Auto-open popup for search result */}
       <AutoOpenPopup selectedStoreId={selectedStoreId} markerRefs={markerRefs} />
 
-      {/* Blinking Animation Styles */}
+      {/* Blinking Animation Styles & Clusters */}
       <style>{`
         @keyframes blinkMarker {
           0% { opacity: 1; filter: brightness(1); }
-          50% { opacity: 0.8; filter: brightness(1.3); transform: scale(1.05) translateY(-2px); }
+          50% { opacity: 0.8; filter: brightness(1.2); }
           100% { opacity: 1; filter: brightness(1); }
         }
         .urgent-marker-blink {
-          animation: blinkMarker 1.2s infinite ease-in-out;
+          animation: blinkMarker 1.5s infinite ease-in-out;
           transform-origin: bottom center;
+        }
+        .custom-marker-cluster {
+          background: rgba(16, 185, 129, 0.2);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .cluster-custom-icon {
+          background: #10B981;
+          color: white;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          font-size: 14px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.25);
         }
       `}</style>
 
       {/* Store Markers from real DB with Clustering */}
-      <MarkerClusterGroup chunkedLoading maxClusterRadius={50}>
+      <MarkerClusterGroup 
+        chunkedLoading 
+        maxClusterRadius={50}
+        iconCreateFunction={(cluster: any) => {
+          return L.divIcon({
+            html: `<div class="cluster-custom-icon">${cluster.getChildCount()}</div>`,
+            className: 'custom-marker-cluster',
+            iconSize: L.point(40, 40, true),
+          });
+        }}
+      >
         {stores.map((store) => {
           const topProduct = store.products[0];
           // Sắp hết hạn trong vòng 24 giờ
