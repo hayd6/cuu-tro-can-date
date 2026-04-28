@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { switchUserRole } from "@/lib/actions/users";
+import defaultAvatar from "@/assets/images/avatar-mac-dinh.jpg";
 
 interface MerchantStats {
   pendingOrders: number;
@@ -106,7 +107,7 @@ export default function MerchantProfileClient({ store, stats }: MerchantProfileC
                   <img
                     className="w-full h-full rounded-full object-cover bg-white"
                     alt={store.name}
-                    src={store.imageUrl || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=200"}
+                    src={store.imageUrl || defaultAvatar.src}
                   />
                 </div>
                 <div className="absolute -bottom-2 -right-2 bg-primary text-white p-1.5 rounded-full shadow-md border-2 border-surface">

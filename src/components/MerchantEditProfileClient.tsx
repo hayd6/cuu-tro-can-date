@@ -6,7 +6,11 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { updateStoreProfile } from "@/lib/actions/stores";
 import { uploadAvatar } from "@/lib/actions/users";
-import LocationPickerModal from "./LocationPickerModal";
+import dynamic from "next/dynamic";
+
+const LocationPickerModal = dynamic(() => import("./LocationPickerModal"), {
+  ssr: false,
+});
 
 interface MerchantEditProfileClientProps {
   store: {
