@@ -113,6 +113,11 @@ export async function getOrdersByBuyer(buyerId: string) {
           name: true,
           address: true,
           imageUrl: true,
+          lat: true,
+          lng: true,
+          owner: {
+            select: { phone: true }
+          }
         },
       },
       items: {

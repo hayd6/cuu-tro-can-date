@@ -21,7 +21,7 @@ type Order = {
   paymentStatus: string;
   pickupCode: string | null;
   createdAt: Date;
-  store: { id: string; name: string; address: string; imageUrl: string | null };
+  store: { id: string; name: string; address: string; imageUrl: string | null; lat?: number | null; lng?: number | null; owner?: { phone: string | null } };
   items: OrderItem[];
   reviews?: { id: string }[];
 };
@@ -152,11 +152,30 @@ export default function BuyerOrdersClient({ orders }: { orders: Order[] }) {
 
                       {/* Action Buttons */}
                       <div className="flex gap-3">
-                        <button className="flex-1 py-3 px-4 rounded-lg border border-primary/20 bg-surface-container-low text-primary text-sm font-bold flex items-center justify-center space-x-2 active:scale-95 transition-all hover:bg-primary/5">
+                        <button 
+                          onClick={() => {
+                            if (order.store.lat && order.store.lng) {
+                              window.open(`https://www.google.com/maps/dir/?api=1&destination=${order.store.lat},${order.store.lng}`, '_blank');
+                            } else {
+                              window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(order.store.address)}`, '_blank');
+                            }
+                          }}
+                          className="flex-1 py-3 px-4 rounded-lg border border-primary/20 bg-surface-container-low text-primary text-sm font-bold flex items-center justify-center space-x-2 active:scale-95 transition-all hover:bg-primary/5"
+                        >
                           <span className="material-symbols-outlined text-[20px]">near_me</span>
                           <span>Chỉ đường</span>
                         </button>
-                        <button className="flex-1 py-3 px-4 rounded-lg bg-surface-container-high text-on-surface text-sm font-bold flex items-center justify-center space-x-2 active:scale-95 transition-all hover:bg-surface-variant">
+                        <button 
+                          onClick={() => {
+                            const phone = order.store.owner?.phone;
+                            if (phone) {
+                              window.open(`tel:${phone}`);
+                            } else {
+                              alert("Cửa hàng chưa cập nhật số điện thoại.");
+                            }
+                          }}
+                          className="flex-1 py-3 px-4 rounded-lg bg-surface-container-high text-on-surface text-sm font-bold flex items-center justify-center space-x-2 active:scale-95 transition-all hover:bg-surface-variant"
+                        >
                           <span className="material-symbols-outlined text-[20px]">call</span>
                           <span>Gọi cửa hàng</span>
                         </button>
