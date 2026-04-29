@@ -15,7 +15,7 @@ export default function SettingsPage() {
         <div className="flex items-center px-4 py-3 w-full">
           <div className="flex items-center gap-3">
             <button 
-              onClick={() => router.back()} 
+              onClick={() => router.push("/profile")} 
               className="active:scale-95 transition-transform duration-200 text-[#006c49]"
             >
               <span className="material-symbols-outlined">arrow_back</span>

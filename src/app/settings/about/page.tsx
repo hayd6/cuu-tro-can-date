@@ -28,6 +28,14 @@ export default function AboutPage() {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-white via-emerald-50 to-white px-4 md:px-8 lg:px-12 py-16 overflow-hidden">
 
+      {/* Floating Back Button */}
+      <Link 
+        href="/settings" 
+        className="fixed top-6 left-6 z-[100] bg-white/80 backdrop-blur-md p-3 rounded-full text-[#10B981] shadow-lg border border-emerald-100 hover:scale-105 active:scale-95 transition-all flex items-center justify-center group"
+      >
+        <span className="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
+      </Link>
+
       {/* BACKGROUND BLUR */}
       <div className="absolute top-0 left-0 w-72 h-72 bg-[#10B981]/20 blur-3xl rounded-full" />
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#10B981]/10 blur-3xl rounded-full" />
