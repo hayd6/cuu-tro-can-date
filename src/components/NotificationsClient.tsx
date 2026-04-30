@@ -130,7 +130,7 @@ export default function NotificationsClient({
               <span className="text-xs font-bold tracking-widest text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-full">Hôm nay</span>
               <div className="h-px flex-1 bg-slate-200/60"></div>
             </div>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
               {groups.today.map((n) => (
                 <div 
                   key={n.id}
@@ -160,7 +160,7 @@ export default function NotificationsClient({
               <span className="text-xs font-bold tracking-widest text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-full">Hôm qua</span>
               <div className="h-px flex-1 bg-slate-200/60"></div>
             </div>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
               {groups.yesterday.map((n) => (
                 <div 
                   key={n.id}
@@ -190,7 +190,7 @@ export default function NotificationsClient({
               <span className="text-xs font-bold tracking-widest text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-full">Cũ hơn</span>
               <div className="h-px flex-1 bg-slate-200/60"></div>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 opacity-80">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1 opacity-80">
               {groups.older.map((n) => (
                 <div 
                   key={n.id}
