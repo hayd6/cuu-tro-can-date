@@ -38,3 +38,16 @@ https://cuu-tro-can-date.vercel.app/
 Để triển khai và chạy hệ thống trên môi trường cục bộ (local), dự án sử dụng trình quản lý gói Node.js thông qua npm. Người dùng trước tiên cần cài đặt toàn bộ các thư viện và phụ thuộc cần thiết bằng lệnh "npm install". Quá trình này sẽ tự động tải về và thiết lập các module được định nghĩa trong tệp package.json.
 Sau khi hoàn tất bước cài đặt, hệ thống có thể được khởi chạy bằng lệnh "npm run dev", cho phép ứng dụng vận hành ở chế độ phát triển (development mode). Ở chế độ này, framework Next.js hỗ trợ tự động reload khi có thay đổi trong mã nguồn, giúp quá trình phát triển và kiểm thử trở nên nhanh chóng và hiệu quả hơn.
 Việc sử dụng quy trình cài đặt và khởi chạy đơn giản thông qua npm không chỉ đảm bảo tính nhất quán trong môi trường phát triển mà còn giúp giảm thiểu các lỗi cấu hình, tạo điều kiện thuận lợi cho việc triển khai và mở rộng hệ thống.
+
+## Hình ảnh
+
+![Khám phá web](image.png)
+![Khám phá Tối web](image-1.png)
+![Đơn hàng web](image-2.png)
+![Thông báo -web](image-3.png)
+![Cá nhân web](image-4.png)
+![Khám phá app](image-5.png)
+![Danh sách sản phẩm web](image-6.png)
+![Thanh toán web](image-7.png)
+![Chi tiết sản phẩm web](image-8.png)
+![about](image-9.png)
